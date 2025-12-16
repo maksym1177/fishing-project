@@ -1,7 +1,8 @@
-/* * {
+* {
     padding: 0;
     margin: 0;
     border: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 *, *:before, *:after {
     -moz-box-sizing: border-box;
@@ -16,8 +17,7 @@ nav, footer, header, aside { display: block; }
 html, body {
     height: 100%;
     width: 100%;
-    font-size: 62.5%; //for rem usage
-    line-height: 1;
+    font-size: 62.5%; 
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -33,8 +33,25 @@ a:hover { text-decoration: none; }
 ul li { list-style-type: none; }
 img { vertical-align: top; }
 
-h1, h2, h3, h4, h5, h6 { font-style: inherit; font-weight: 400; } */
-
+h1, h2, h3, h4, h5, h6 { font-style: inherit; font-weight: 400; } 
+p{
+    font-size: 1.5rem;
+}
+h1,h2,h3,h4,h{
+    font-size: 2.5rem;
+}
+ footer{
+    display: none;
+}
 :root{
-    --text-size:28px;
+   --light-gray:#EAEAEA;
+   --gray:#F3F3F3;
+   --dark-green:#337418;
+   --light-green:#459823;
+   --s-l-green:#F8FFF8;
+}
+
+@font-face{
+    font-family: 'Poppins';
+    src:url(fonts/Poppins-Bold.ttf) format('truetype');
 }

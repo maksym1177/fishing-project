@@ -1,0 +1,80 @@
+body{
+    padding-top: 70px;
+}
+
+.header{
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    top: 0;
+    height: 70px;
+    padding: 10px;
+    background-color: var(--light-gray);
+    align-items: center;
+}
+.header img {
+    height: 50px;
+}
+#bhnd-logo{
+    background-color: var(--dark-green);
+    border-radius: 16px;
+    margin-right: 350px;
+}
+
+.header a {
+    color: black;
+    font-size: 18px;
+    transition: 0.15s ;
+}
+.header a:active {
+    color: var(--dark-green);
+    
+}
+.mid-header{
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+}
+.header .book-btn{
+    margin-left: 350px;
+    margin-right: 20px;
+}
+.book-btn{
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 18px;
+    color:white;
+    background-color: var(--dark-green);
+}
+.mid-header a:first-child{
+    color: var(--dark-green);
+}
+
+@media screen and (max-width: 1300px) {
+    #bhnd-logo{
+        margin-right: 200px;
+    }
+    .header .book-btn{
+        margin-left: 200px;
+       
+    }
+}
+@media screen and (max-width: 1000px) {
+    #bhnd-logo{
+        margin-right: 100px;
+    }
+    .header .book-btn{
+        margin-left: 100px;
+       
+    }
+}
+@media screen and (max-width: 800px) {
+    #bhnd-logo{
+        margin-right: 10px;
+    }
+    .header .book-btn{
+        margin-left: 10px;
+       
+    }
+}

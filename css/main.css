@@ -1,0 +1,33 @@
+h1{
+    font-size: 48px;
+    font-weight: bold;
+}
+.section{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 100px 0;
+    
+}
+.section h1{
+    margin: 20px;
+}
+.section p{
+    width: 600px;
+    font-size: 32px;
+}
+.section1 img {
+    height: 460px;
+}
+.section2{
+    background-color: var(--s-l-green);
+    text-align: center;
+}
+.section2 p {
+    width: 80%;
+    margin: 0 10%;
+}
+.section3{
+    display: flex;
+    background-color: var(--light-gray);
+}
