@@ -6,7 +6,7 @@ h1{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 100px 0;
+    padding: 60px 0;
     
 }
 .section h1{
@@ -28,6 +28,32 @@ h1{
     margin: 0 10%;
 }
 .section3{
-    display: flex;
+    display: block;
+    text-align: center;
     background-color: var(--light-gray);
+}
+ .services{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+ }
+.services h1{
+    font-size: 3.5rem;
+}
+.services p,a{
+    font-size: 2.6rem;
+    max-width: 200px;
+    margin: auto;
+    color: black;
+}
+.services p{
+    
+    margin-bottom: 20px;
+}
+.services div{
+    border-radius: 8px;
+    width: 400px;
+    background-color: #fff;
+    padding: 50px 20px;
 }
