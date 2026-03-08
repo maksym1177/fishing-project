@@ -54,6 +54,9 @@ h1,h2,h3,h4,h{
     src:url(fonts/Poppins-Bold.ttf) format('truetype');
 }
 
-.page1,.page2,.page3,.page4,.page5{
+.page1,.page2,.page3,.page4,.page5,.page6{
     display: none;
+}
+.page2{
+    display: block;
 }
