@@ -317,7 +317,9 @@ iframe, .placement img{
 
 /* ===================== 992px (tablet) ===================== */
 @media (max-width:992px){
-
+.header .book-btn{
+    display: none;
+}
 h1{
     font-size:38px;
 }
@@ -426,7 +428,7 @@ h1{
 
 /* ===================== 480px (small phone) ===================== */
 @media (max-width:480px){
-    
+
 h1{
     font-size:26px;
 }

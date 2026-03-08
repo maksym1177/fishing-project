@@ -78,3 +78,19 @@ body{
        
     }
 }
+
+@media (max-width:768px){
+.header .book-btn{
+    display: none;
+}   
+.mid-header a {
+    font-size:14px;
+}}
+
+@media (max-width:480px){
+.header .book-btn{
+    display: none;
+}   
+.mid-header a {
+    font-size: 14px;
+}}
