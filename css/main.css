@@ -17,7 +17,8 @@ h1{
     font-size: 32px;
 }
 .section1 img {
-    height: 460px;
+    width: 90%;
+    border-radius: 5px;
 }
 .section2{
     background-color: var(--s-l-green);
@@ -31,10 +32,12 @@ h1{
     display: block;
     text-align: center;
     background-color: var(--light-gray);
+    padding-left: 20px;
+    padding-right: 20px;
 }
  .services{
     display: flex;
-    gap: 20px;
+    gap: 1%;
     justify-content: center;
     align-items: center;
  }
@@ -43,7 +46,7 @@ h1{
 }
 .services p,a{
     font-size: 2.6rem;
-    max-width: 200px;
+    max-width: 300px;
     margin: auto;
     color: black;
 }
@@ -53,7 +56,216 @@ h1{
 }
 .services div{
     border-radius: 8px;
-    width: 400px;
+    flex: 1;
     background-color: #fff;
     padding: 50px 20px;
+}
+
+
+
+.section4{
+    flex-direction: column;
+}
+.tournaments{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;  
+}
+
+
+
+/*-------------------------------------------------page 2----------------------------------------------------------*/
+.page2 .section1{
+    background-color: var(--s-l-green);
+}
+.page2 .section3{
+    background-color: #fff;
+}
+.serpage2 div{
+    background-color: var(--s-l-green);
+    box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.31);
+}
+
+
+.placement{
+    background-color: var(--s-l-green);
+    flex-direction: column;
+}
+.placement div, iframe, .placement img{
+    height: 440px;
+    border-radius: 20px;
+}
+.placement img{
+    margin-left: 20px;
+}
+.placement h1{
+    padding-top: 0px;
+}
+
+
+/*-------------------------------------------------page 3----------------------------------------------------------*/
+.altankas{
+    display: flex;
+    width: 600px;
+    margin:0 10%;
+    gap: 20px;
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.31);
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+
+}
+
+.section-al{
+    padding: 60px;
+    background-color: #fff;
+    gap: 20px;
+    display: flex;
+}
+.altankas div{
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+h2{
+    font-weight:bold;
+}
+.altankas p{
+    font-size: 18px;
+}
+.altankas img{
+    width: 300px;
+    height: 150px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.altankas button{
+    width: 100%;
+    padding: 16px;
+}
+
+
+
+.section2pg3{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    background-color: var(--s-l-green);
+}
+
+.accordion{
+    width:50vw;
+    box-shadow:5px 5px 15px rgba(0,0,0,0.31);
+    border-radius:10px;
+    margin-top: 20px;
+}
+
+.accordion input{
+    display:none;
+}
+
+.accordion-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+    font-size:24px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.accordion-content{
+    max-height:0;
+    overflow:hidden;
+    transition:0.3s;
+    padding:0 20px;
+    line-height: 50px;
+    font-size: 14px;
+}
+.accordion-content p {
+    width: 100%;
+}
+
+.accordion input:checked + .accordion-header + .accordion-content{
+    max-height:none;
+    padding:20px;
+}
+
+/*-------------------------------------------------page 4----------------------------------------------------------*/
+.pg4sec1 h1{
+    margin: 0px;
+}
+.pg4sec1 p{
+    width: 800px;
+}
+.pg4sec1 img{
+    height:400px;
+}
+/*--------------------------------------------*//*-------------------------------------------------page 5--------------*/
+
+.pg5sec1{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+.pg5sec2{
+    flex-direction: column;
+    background-color: var(--s-l-green);
+}
+.grid-photos{
+    display: grid;
+    grid-template-columns: repeat(4,200px);
+    gap: 20px;
+    row-gap: 20px;
+    
+}
+.grid-photos img{
+    height: 200px;
+    width: 200px;   
+}
+#more-tr-btn,#tourn-btn{
+    font-size: 26px;
+    font-weight: bold;
+    padding: 10px 25px;
+    margin-top: 20px;
+}
+
+
+
+
+
+/*------------------------------------------------page 6--------------*/
+.pg6sec1{
+    background-color: var(--s-l-green);
+}
+.pg6sec1 img{
+    width: 600px;
+}
+.subsectionpg6{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.tour-div img{
+    width: 90%;
+    height: 200px;
+}
+.date{
+    font-weight: bold;
+}
+.page6 .section3{
+    background-color: #fff;
+}
+
+.pg6sec4{
+    flex-direction: column;
+}
+.pg6sec4 p{
+    width: 90%;
+    margin-top: 20px;
 }
