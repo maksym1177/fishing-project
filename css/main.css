@@ -2,6 +2,7 @@ h1{
     font-size: 48px;
     font-weight: bold;
 }
+
 .section{
     display: flex;
     justify-content: space-around;
@@ -11,6 +12,13 @@ h1{
 }
 .section h1{
     margin: 20px;
+}
+.tournaments h1{
+    margin: 10px 0px;
+    font-size: 36px;
+}
+.tournaments h1:nth-child(2n){
+    font-size: 26px;
 }
 .section p{
     width: 600px;
@@ -120,8 +128,9 @@ h1{
 
 .section-al{
     padding: 60px;
+    flex-wrap: wrap;
     background-color: #fff;
-    gap: 20px;
+    text-align: center;
     display: flex;
 }
 .altankas div{
@@ -130,9 +139,11 @@ h1{
     flex-direction: column;
     justify-content: center;
     gap: 20px;
+    
 }
-h2{
+.altankas h2{
     font-weight:bold;
+    margin-left: 20px;
 }
 .altankas p{
     font-size: 18px;
@@ -146,6 +157,7 @@ h2{
 .altankas button{
     width: 100%;
     padding: 16px;
+    
 }
 
 
@@ -224,9 +236,13 @@ h2{
     row-gap: 20px;
     
 }
+.sc1 img{
+    border-radius: 5px;
+}
 .grid-photos img{
     height: 200px;
     width: 200px;   
+    border-radius: 5px;
 }
 #more-tr-btn,#tourn-btn{
     font-size: 26px;
@@ -245,6 +261,8 @@ h2{
 }
 .pg6sec1 img{
     width: 600px;
+    margin-top: 20px;
+    border-radius: 5px;
 }
 .subsectionpg6{
     display: flex;
@@ -253,7 +271,7 @@ h2{
 }
 .tour-div img{
     width: 90%;
-    height: 200px;
+    height: 400px;
 }
 .date{
     font-weight: bold;
@@ -270,14 +288,37 @@ h2{
     margin-top: 20px;
 }
 
-
+#tourn-btn{
+    width: 400px;
+    padding: 15px;
+}
 
 /* ===================== 1200px ===================== */
 @media (max-width:1200px){
+.sc1 p{
 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tournaments  div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.section1 div{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .section{
     flex-direction: column;
     text-align: center;
+}
+.pg6sec1{
+    flex-direction: column-reverse;
 }
 
 .section p{
@@ -312,11 +353,16 @@ iframe, .placement img{
     margin-left: auto;
     margin-right: auto;
  }
+
 }
 
 
 /* ===================== 992px (tablet) ===================== */
 @media (max-width:992px){
+.altankas div{
+width: 100%;
+}
+
 .header .book-btn{
     display: none;
 }

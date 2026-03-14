@@ -31,4 +31,21 @@ moreTrBtn.addEventListener("click" , ()=>{
 
     k += 4;
 });
+const links = document.querySelectorAll(".mid-header a");
+const pages = document.querySelectorAll("[class^='page']");
 
+links.forEach((link, index) => {
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        pages.forEach(page => page.style.display = "none");
+        links.forEach(l => l.style.color = "black");
+
+        const page = document.querySelector(".page" + (index + 1));
+        if(page){
+            page.style.display = "block";
+        }
+
+        link.style.color = "var(--dark-green)";
+    });
+});
