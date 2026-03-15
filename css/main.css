@@ -909,13 +909,12 @@ h1{
 }
 /* ----------------------MAIN MEDIA----------------------------- */
 
-.booking-div
 @media (max-width:1400px){
 .sc1 p{
 
     margin-left: auto;
     margin-right: auto;
-}
+}}
 /* ===================== 1200px ===================== */
 @media (max-width:1200px){
 .sc1 p{
