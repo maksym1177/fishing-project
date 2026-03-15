@@ -87,7 +87,9 @@ h1{
 /*-------------------------------------------------page 2----------------------------------------------------------*/
 .page2 .section1{
     background-color: var(--s-l-green);
+
 }
+
 .page2 .section3{
     background-color: #fff;
 }
@@ -95,7 +97,9 @@ h1{
     background-color: var(--s-l-green);
     box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.31);
 }
-
+#pg2img{
+    height: 400px;
+}
 
 .placement{
     background-color: var(--s-l-green);
@@ -497,14 +501,14 @@ h1{
 
 
 /*---------------------------------PROFILE--------------------------------------*/
-.prifile-div{
+.prifile-div, .bookings-div{
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 100;
     width: 50vw;
-    height: 80vh;
+    height: fit-content;
     background-color: var(--s-l-green);
     box-shadow: 5px 5px 15px 5000px rgba(0,0,0,0.16); 
     border-radius: 16px;
@@ -516,7 +520,7 @@ h1{
 
 #profile-content-img img{
     border-radius: 50%;
-    height: 120px;
+    height: 90px;
     position: absolute;
     top: -80px;
     left: 50%;
@@ -537,6 +541,8 @@ h1{
 }
 .profile-info{
     display: flex;
+    margin-bottom: 3vh;
+    align-items: center;
     justify-content: space-between;
 }
 .profile-info p {
@@ -551,11 +557,365 @@ h1{
     background-color: rgb(51, 54, 78);
     color: #fff;
 }
+#profile-form{
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+}
+#profile-form input{
+    background-color: rgb(224, 224, 224);
+    font-size: 22px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 70%;
+}
+#profile-form label{
+    font-size: 32px;
+    font-weight: bold;
+}
+.profile-element{
+    border-bottom: 1px solid gray;
+    padding: 30px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.profile-element:last-child{
+    border:none;
+}
+#discount {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
+
+/* ---------- Tablets ---------- */
+@media (max-width: 1024px){
+
+.prifile-div{
+    width: 70vw;
+}
+
+.profile-info p{
+    font-size:24px;
+}
+
+#profile-save-btn{
+    font-size:24px;
+    height:60px;
+}
+
+#profile-form label{
+    font-size:32px;
+}
+
+#profile-form input{
+    width:60%;
+    font-size:18px;
+}
+
+.profile-element{
+    padding:40px 30px;
+}
+
+#discount{
+    font-size:32px;
+}
+
+}
 
 
+/* ---------- Phones ---------- */
+@media (max-width: 768px){
+
+.prifile-div{
+    width:90vw;
+}
+
+.profile-div-img{
+    height:150px;
+}
+
+#profile-content-img img{
+    height:90px;
+    top:-60px;
+}
+
+.profile-info{
+    flex-direction:column;
+    gap:10px;
+}
+.profile-info p ,.profile-info h1{
+    text-align: center;
+}
+.profile-info p{
+    font-size:20px;
+}
+
+#profile-form label{
+    font-size:24px;
+}
+
+#profile-form input{
+    width:100%;
+    font-size:16px;
+    padding:15px;
+}
+
+.profile-element{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+    padding:25px 20px;
+}
+
+#profile-save-btn{
+    width:100%;
+    font-size:20px;
+    height:50px;
+}
+
+#discount{
+    font-size:24px;
+}
+
+}
+
+
+/* ---------- Small phones ---------- */
+@media (max-width: 480px){
+
+.profile-div-img{
+    height:120px;
+}
+
+#profile-content-img img{
+    height:70px;
+    top:-50px;
+}
+
+#profile-form label{
+    font-size:20px;
+}
+
+.profile-info p{
+    font-size:18px;
+}
+
+#discount{
+    font-size:20px;
+}
+
+}
+.prifile-div{
+    display: none;
+}
+
+
+
+/* ---------------------------BOOKINGS-------------------------------------- */
+.bookings-div{
+    display: none;
+}
+.bookings-div{
+    height: 90%;
+    border-radius: 16px;
+    overflow-y: auto;
+}
+.bookings-div h1{
+    margin-top: 10px;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.bookings-div h2{
+    font-size: 24px;
+    font-weight: bold;
+}
+.booking-div{
+    border-bottom: 1px solid gray;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+}
+.booking-div p {
+    font-size:24px;
+}
+
+.cansel-booking{
+    padding: 15px 20px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    font-size: 24px;
+    border-radius: 8px;
+    max-height: 80px;
+    align-self: center;
+}
+
+
+
+@media (max-width: 1300px){
+
+.booking-div{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+.cansel-booking{
+    width: 90%;
+    font-size: 20px;
+    padding: 12px;
+}
+}
+/* ---------- tablets ---------- */
+@media (max-width: 1024px){
+
+.profile-div, .bookings-div{
+    width: 70vw;
+}
+
+.profile-info p{
+    font-size:24px;
+}
+
+#profile-save-btn{
+    font-size:22px;
+    height:55px;
+}
+
+#profile-form label{
+    font-size:24px;
+}
+
+#profile-form input{
+    width:65%;
+    font-size:18px;
+}
+
+.profile-element{
+    padding:25px 30px;
+}
+
+.booking-div p{
+    font-size:26px;
+}
+
+.cansel-booking{
+    font-size:22px;
+}
+
+}
+
+
+/* ---------- phones ---------- */
+@media (max-width: 768px){
+
+.profile-div, .bookings-div{
+    width:85vw;
+}
+
+.profile-info{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:10px;
+}
+
+.profile-info p{
+    font-size:20px;
+}
+
+#profile-form label{
+    font-size:22px;
+}
+
+#profile-form input{
+    width:100%;
+    font-size:16px;
+    box-sizing:border-box;
+}
+
+.profile-element{
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
+    padding:20px;
+}
+
+#profile-save-btn{
+    width:100%;
+    font-size:18px;
+    height:50px;
+}
+
+/* bookings */
+
+.booking-div{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+}
+
+.booking-div p{
+    font-size:20px;
+}
+
+.cansel-booking{
+    width:100%;
+    font-size:18px;
+}
+
+}
+
+
+/* ---------- small phones ---------- */
+@media (max-width: 480px){
+
+.profile-div, .bookings-div{
+    width:94vw;
+}
+
+.profile-div-img{
+    height:120px;
+}
+
+#profile-content-img img{
+    height:70px;
+    top:-50px;
+}
+
+.profile-info p{
+    font-size:18px;
+}
+
+#profile-form label{
+    font-size:18px;
+}
+
+#discount{
+    font-size:18px;
+}
+
+.booking-div p{
+    font-size:18px;
+}
+
+.cansel-booking{
+    font-size:16px;
+}
+
+}
 /* ----------------------MAIN MEDIA----------------------------- */
 
+.booking-div
+@media (max-width:1400px){
+.sc1 p{
 
+    margin-left: auto;
+    margin-right: auto;
+}
 /* ===================== 1200px ===================== */
 @media (max-width:1200px){
 .sc1 p{

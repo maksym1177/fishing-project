@@ -35,8 +35,8 @@
 
             <div class="profile-menu">
                 <a id="profile-login" href="#">Увійти</a>
-                <a href="#">Профіль</a>
-                <a href="#">Мої бронювання</a>
+                <a id="header-profile" href="#">Профіль</a>
+                <a id="header-bookings" href="#">Мої бронювання</a>
                 <a href="#">Вийти</a>
             </div>
         </div>
@@ -129,7 +129,7 @@
             </div>
             
             <div>
-                <img src="./photos/im6.png" alt="">
+                <img id="pg2img" src="./photos/im6.png" alt="">
             </div>
             
             </div>
@@ -664,14 +664,49 @@
 
                         <button id="profile-save-btn" type="submit">Зберегти</button>
                     </div>
-                    <input type="name">
-                    <input type="email">
-                    <input type="password">
-                    <input type="tel">
+
+                    <div class="profile-element">
+                        <label for="profile-name">Ваше імя</label>
+                        <input type="name" id="profile-name">
+                    </div>
+
+                    <div class="profile-element">
+                        <label for="profile-email">Ваш email</label>
+                        <input type="email" id="profile-email">
+                    </div>
+
+                    <div class="profile-element">
+                        <label for="profile-tel">Ваш номер</label>
+                        <input type="tel" id="profile-tel">
+                    </div>
+                    <div class="profile-element">
+                        <p id="discount">Ваша знижка становить: 15%</p>
+                    </div>
+
+                    
+                    
+
                     
                 </form>
             </div>
         </div>
+    </div>
+    <div class="bookings-div">
+        <h1>Історія бронювань</h1>
+        <div class="booking-div">
+            <div>
+                <h2>Тип Бронювання</h2>
+                 <p class="booking type">
+                Альтанка на 8 чоловік</p>
+            </div>
+            <div>       
+                <h2>Дата бронювання</h2>
+                <p class="booking-date">22.02.2026</p>
+            </div>     
+            <button class="cansel-booking">Відмінити</button>
+        </div>
+          
+          
     </div>
     <footer>
         <div id="footer">

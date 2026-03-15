@@ -107,3 +107,30 @@ document.addEventListener('click', (e) => {
         formDiv.style.display = 'none';
     }
 });
+
+
+
+const bookingsBtn = document.getElementById("header-bookings");
+const profileBtn = document.getElementById("header-profile");
+const profileDiv = document.getElementsByClassName("prifile-div")[0];
+const bookingsDiv = document.getElementsByClassName("bookings-div")[0];
+
+bookingsBtn.onclick = (e)=>{
+    e.stopPropagation();
+    bookingsDiv.style.display = "block";
+}
+document.addEventListener('click', (e) => {
+    if (bookingsDiv.style.display === "block" && !bookingsDiv.contains(e.target)) {
+        bookingsDiv.style.display = 'none';
+    }
+});
+
+profileBtn.onclick = (e)=>{
+    e.stopPropagation();
+    profileDiv.style.display = "block";
+}
+document.addEventListener('click', (e) => {
+    if (profileDiv.style.display === "block" && !profileDiv.contains(e.target)) {
+        profileDiv.style.display = 'none';
+    }
+});
