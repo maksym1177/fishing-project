@@ -272,63 +272,43 @@ regEye.addEventListener("click", () => {
 });
 
 /*----------------------------------profile menu --------------*/
-const pLogin = document.getElementById("profile-login");
 
+const pLogin = document.getElementById('profile-login');
+const profileDiv = document.getElementsByClassName('prifile-div')[0];
+const bookingsDiv = document.getElementsByClassName('bookings-div')[0];
+const bookForm = document.querySelector('.booking-form-div');
+const bookBtns = document.querySelectorAll('.book-btn');
 
-pLogin.onclick = (e) => {
-    e.stopPropagation(); 
-    formDiv.style.display = "block";
+const toggleDisplay = (element, show = true) => {
+    if (element) element.style.display = show ? 'block' : 'none';
 };
 
-document.addEventListener('click', (e) => {
-    if (formDiv.style.display === "block" && !formDiv.contains(e.target)) {
-        formDiv.style.display = 'none';
+
+const setupTrigger = (btn, target) => {
+    if (btn && target) {
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            toggleDisplay(target, true);
+        };
     }
-});
+};
+
+setupTrigger(pLogin, formDiv);
+setupTrigger(bookingsBtn, bookingsDiv);
+setupTrigger(profileBtn, profileDiv);
+bookBtns.forEach(btn => setupTrigger(btn, bookForm));
 
 
-
-const profileDiv = document.getElementsByClassName("prifile-div")[0];
-const bookingsDiv = document.getElementsByClassName("bookings-div")[0];
-
-bookingsBtn.onclick = (e)=>{
-    e.stopPropagation();
-    bookingsDiv.style.display = "block";
-}
 document.addEventListener('click', (e) => {
-    if (bookingsDiv.style.display === "block" && !bookingsDiv.contains(e.target)) {
-        bookingsDiv.style.display = 'none';
-    }
+    const modals = [formDiv, profileDiv, bookingsDiv, bookForm];
+    
+    modals.forEach(modal => {
+        if (modal && modal.style.display === 'block' && !modal.contains(e.target)) {
+            toggleDisplay(modal, false);
+        }
+    });
 });
 
-profileBtn.onclick = (e)=>{
-    e.stopPropagation();
-    profileDiv.style.display = "block";
-}
-document.addEventListener('click', (e) => {
-    if (profileDiv.style.display === "block" && !profileDiv.contains(e.target)) {
-        profileDiv.style.display = 'none';
-    }
-});
-
-
-
-
-const bookBtns = document.querySelectorAll('.book-btn');
-const bookForm = document.querySelector('.booking-form-div');
-
-bookBtns.forEach((btn) => {
-  btn.onclick = (e) => {
-    e.stopPropagation();
-    bookForm.style.display = 'block';
-  };
-});
-const bookingForm = document.getElementsByClassName("booking-form-div")[0];
-document.addEventListener('click', (e) => {
-    if (bookingForm.style.display === "block" && !bookingForm.contains(e.target)) {
-        bookingForm.style.display = 'none';
-    }
-});
 
 
 loginForm.addEventListener('submit', async (e) => {
