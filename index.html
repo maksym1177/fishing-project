@@ -599,14 +599,14 @@
     </main>
 
     <div class="form-div">
-        <form id="login-form" action="#">
+        <form id="login-form" action="POST">
 
  
-            <input type="email" required placeholder="Eлектроннa поштa" id="login-mail">
+            <input type="email" name="loginEmail" required placeholder="Eлектроннa поштa" id="login-mail">
 
 
             <div class="form-element">
-                <input type="password" placeholder="Пароль" required id="login-pass">
+                <input type="password" type="loginPassword" placeholder="Пароль" required id="login-pass">
                 <button class="eye" id="login-eye" type="button">
                     <img src="photos/eye.png" alt="">
                 </button>
@@ -614,17 +614,17 @@
             
             <a id="register-link" href="#">Зареєструватись</a>
 
-            <button id="register-btn" class="form-btn" type="submit">Увійти</button>
+            <button id="login-btn" class="form-btn" type="submit">Увійти</button>
 
         </form>
 
-        <form id="register-form" action="#">
+        <form id="register-form" action="POST">
 
-            <input type="text" placeholder="Повне ім'я" required id="register-name">
+            <input type="text" name="regName" placeholder="Повне ім'я" required id="register-name">
 
 
             <div class="form-element">
-                <input type="password"  placeholder="Пароль" required id="register-pass">
+                <input type="password" name="regPassword" placeholder="Пароль" required id="register-pass">
                 <button  class="eye" id="reg-eye">
                     <img src="photos/eye.png"  alt="">
                 </button>
@@ -632,12 +632,12 @@
             </div>
 
 
-            <input type="email" required placeholder="Eлектроннa поштa" id="register-mail">
+            <input type="email" name="regEmail" required placeholder="Eлектроннa поштa" id="register-mail">
 
 
             <div class="a-div">
-                <a id="login-link" href="#">Зайти</a>
-                <a id="login-link" href="#">Забув пароль</a>
+                <a class="login-link" id="login-link" href="#">Зайти</a>
+                <a class="login-link" id="forgot-password" href="#">Забув пароль</a>
             </div>
 
             <button id="register-btn" class="form-btn" type="submit">Зареєструватись</button>

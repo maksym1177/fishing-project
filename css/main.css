@@ -353,7 +353,7 @@ h1{
     color: #000;
 }
 
-#register-link, #login-link{
+#register-link, .login-link{
     color: #fff;
     font-size: 20px;
     cursor: pointer;
@@ -488,7 +488,7 @@ h1{
     padding:12px 14px;
 }
 
-#register-link, #login-link{
+#register-link, .login-link{
     font-size:16px;
 }
 
