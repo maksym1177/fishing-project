@@ -288,7 +288,6 @@ document.addEventListener('click', (e) => {
 
 
 
-
 const profileDiv = document.getElementsByClassName("prifile-div")[0];
 const bookingsDiv = document.getElementsByClassName("bookings-div")[0];
 
@@ -315,6 +314,22 @@ document.addEventListener('click', (e) => {
 
 
 
+const bookBtns = document.querySelectorAll('.book-btn');
+const bookForm = document.querySelector('.booking-form-div');
+
+bookBtns.forEach((btn) => {
+  btn.onclick = (e) => {
+    e.stopPropagation();
+    bookForm.style.display = 'block';
+  };
+});
+const bookingForm = document.getElementsByClassName("booking-form-div")[0];
+document.addEventListener('click', (e) => {
+    if (bookingForm.style.display === "block" && !bookingForm.contains(e.target)) {
+        bookingForm.style.display = 'none';
+    }
+});
+
 
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -323,7 +338,7 @@ loginForm.addEventListener('submit', async (e) => {
     const password = document.getElementById('login-pass').value;
 
     const params = new URLSearchParams();
-    // ВАЖЛИВО: ці назви мають бути ідентичні @RequestParam у Java
+
     params.append('loginEmail', email);
     params.append('loginPassword', password);
 
@@ -332,18 +347,17 @@ loginForm.addEventListener('submit', async (e) => {
             method: 'POST',
             body: params,
             headers: {
-                // Додаємо заголовок, щоб сервер розумів, що це форма
+
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
 
-        // Оскільки Java робить redirect, перевіряємо фінальний URL
+
         if (response.ok) {
             if (response.url.includes("error")) {
                 alert("Невірний логін або пароль");
             } else {
                 alert("Вхід успішний!");
-                // Перенаправляємо туди, куди сказав сервер (наприклад, dashboard.html)
                 window.location.href = response.url;
             }
         } else {

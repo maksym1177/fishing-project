@@ -40,7 +40,7 @@ body{
     margin-left: 350px;
     margin-right: 20px;
 }
-.book-btn{
+.book-btn,.trophies-btn {
     padding: 8px 16px;
     border-radius: 5px;
     font-size: 18px;

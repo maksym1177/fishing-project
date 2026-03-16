@@ -310,7 +310,9 @@ h1{
     justify-content: space-around;
     align-items: center;
 }
-
+.booking-form-div{
+    display: none;
+}
 /*------------------------------------------------FORM--------------*/
 
 .form-div,.booking-form-div{
