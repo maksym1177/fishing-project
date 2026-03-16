@@ -97,6 +97,12 @@ body{
 }
 }
 
+#header-profile,#end-session-btn,#header-bookings{
+display:none;
+}
+
+
+
 @media screen and (max-width: 1300px) {
     #bhnd-logo{
         margin-right: 200px;

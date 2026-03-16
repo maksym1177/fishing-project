@@ -37,7 +37,7 @@
                 <a id="profile-login" href="#">Увійти</a>
                 <a id="header-profile" href="#">Профіль</a>
                 <a id="header-bookings" href="#">Мої бронювання</a>
-                <a href="#">Вийти</a>
+                <a id="end-session-btn" href="/api/logout">Вийти</a>
             </div>
         </div>
         
@@ -521,7 +521,6 @@
                 <div class="subsectionpg6">
                     <h1>Найближчі Риболовні Турніри</h1>
                     <p>Відкрийте для себе захопливий світ змагань з риболовлі. Дізнайтеся про майбутні події, правила участі та зареєструйтеся вже сьогодні!</p>
-                    <button id="tourn-btn" class="book-btn">Записатись</button>
                 </div>
                 <img src="photos/tournament.jpg" alt="">
 
@@ -599,14 +598,14 @@
     </main>
 
     <div class="form-div">
-        <form id="login-form" action="POST">
+        <form id="login-form" >
 
  
             <input type="email" name="loginEmail" required placeholder="Eлектроннa поштa" id="login-mail">
 
 
             <div class="form-element">
-                <input type="password" type="loginPassword" placeholder="Пароль" required id="login-pass">
+                <input type="password" name="loginPassword" placeholder="Пароль" required id="login-pass">
                 <button class="eye" id="login-eye" type="button">
                     <img src="photos/eye.png" alt="">
                 </button>
@@ -614,11 +613,11 @@
             
             <a id="register-link" href="#">Зареєструватись</a>
 
-            <button id="login-btn" class="form-btn" type="submit">Увійти</button>
+            <button id="login-btn" class="form-btn" >Увійти</button>
 
         </form>
 
-        <form id="register-form" action="POST">
+        <form id="register-form" >
 
             <input type="text" name="regName" placeholder="Повне ім'я" required id="register-name">
 
@@ -640,7 +639,7 @@
                 <a class="login-link" id="forgot-password" href="#">Забув пароль</a>
             </div>
 
-            <button id="register-btn" class="form-btn" type="submit">Зареєструватись</button>
+            <button id="register-btn" class="form-btn" >Зареєструватись</button>
         </form>
 
     </div>
@@ -662,7 +661,7 @@
                             <p>Тут можна обновити персональні свої дані</p>
                         </div>
 
-                        <button id="profile-save-btn" type="submit">Зберегти</button>
+                        <button id="profile-save-btn" type="button">Зберегти</button>
                     </div>
 
                     <div class="profile-element">
@@ -672,7 +671,7 @@
 
                     <div class="profile-element">
                         <label for="profile-email">Ваш email</label>
-                        <input type="email" id="profile-email">
+                        <input type="email" disabled id="profile-email">
                     </div>
 
                     <div class="profile-element">
