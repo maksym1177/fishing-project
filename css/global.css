@@ -60,3 +60,14 @@ h1,h2,h3,h4,h{
 .page1{
     display: block;
 }
+.non-admin{
+    display: none;
+    transform: rotateX(90deg);
+    width: 0;
+}
+.admin-bookings{
+
+}
+.admin-bookings h1{
+    text-align: center;
+}

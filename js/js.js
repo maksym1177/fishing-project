@@ -5,7 +5,6 @@ const bookingsBtn = document.getElementById("header-bookings");
 const profileBtn = document.getElementById("header-profile");
 const bookingBtn = document.getElementById("booking-form-btn");
 const formDiv = document.querySelector('.form-div');
-
 let isLogined = false;
 //----------------------------AUTH CHECK-----------------------
 window.addEventListener('load', async () => {
@@ -347,7 +346,6 @@ moreTrBtn.addEventListener("click" , ()=>{
 /*----------------------------------page changer--------------*/
 const links = document.querySelectorAll(".mid-header a");
 const pages = document.querySelectorAll("[class^='page']");
-
 links.forEach((link, index) => {
     link.addEventListener("click", (e) => {
         e.preventDefault();
@@ -363,6 +361,7 @@ links.forEach((link, index) => {
         link.style.color = "var(--dark-green)";
     });
 });
+
 /*----------------------------------login\register form --------------*/
 const regForm = document.getElementById("register-form");
 const loginLink = document.getElementById("login-link");
