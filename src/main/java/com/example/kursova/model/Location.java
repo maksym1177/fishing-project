@@ -27,6 +27,7 @@ public class Location implements Serializable {
         this.id = id;
     }
 
+
     public String getType() {
         return type;
     }
