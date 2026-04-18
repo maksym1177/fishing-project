@@ -526,8 +526,7 @@ setupTrigger(pLogin, formDiv);
 setupTrigger(bookingsBtn, bookingsDiv);
 setupTrigger(profileBtn, profileDiv);
 bookBtns.forEach(btn => setupTrigger(btn, bookForm));
-
-
+//test
 document.addEventListener('click', (e) => {
     const modals = [formDiv, profileDiv, bookingsDiv, bookForm];
     
