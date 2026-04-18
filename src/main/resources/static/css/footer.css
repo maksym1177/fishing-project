@@ -1,0 +1,57 @@
+footer h1{
+    font-size: 18px;
+}
+footer{
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+}
+footer #footer{
+    
+    display: flex;
+    justify-content: space-around;
+    gap: 40px;
+}
+.socials{
+    width: fit-content;
+}
+.contacts, .soc{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.contacts h1, .soc h1{
+    text-align: center;
+}
+
+
+.advert{
+    color: white;
+    background-color: var(--light-green);
+    padding: 60px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+.advert p {
+    width: 60%;
+    text-align: center;
+}
+.advert button{
+    background-color: white;
+    color: black;
+    padding: 10px 100px;
+    font-size: 32px;
+}
+
+#abs-span{
+    position: absolute;
+    right: 0;
+    bottom: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+

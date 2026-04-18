@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тиха вода</title>
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="icon" href="./photos/site-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="icon"  href="./photos/salmon.png" type="image/x-icon">
+</head>
+<body>
+    <div class="header">
+        
+        <a id= "bhnd-logo"href="index.html"><img class="logo" src="./photos/salmon.png" alt=""></a>
+
+        <div  class="mid-header">
+            <a class="non-admin" href="">Головна</a>
+            <a class="non-admin" href="">Про Нас</a>
+            <a class="non-admin" href="">Послуги</a>
+            <a class="non-admin" href="">Правила</a>
+            <a class="non-admin" href="">Трофеї</a>
+            <a class="non-admin" href="">Турніри</a>
+        </div>
+        <div class="profile">
+            <button class="profile-btn">
+                <img src="photos/profile.png" alt="">
+            </button>
+
+            <div class="profile-menu">
+                <a id="profile-login" href="#">Увійти</a>
+                <a id="header-profile" href="#">Профіль</a>
+                <a id="header-bookings" href="#">Мої бронювання</a>
+                <a id="end-session-btn" href="/api/logout">Вийти</a>
+            </div>
+        </div>
+        
+
+    </div>
+    <main>
+        <div class="admin admin-bookings">
+            <h1>Активні бронювання</h1>
+            <div class="admin-booking-div">
+                <div>
+                    <h2>Тип Бронювання</h2>
+                    <p class="admin-booking-type">
+                    Альтанка на 8 чоловік</p>
+                </div>
+                <div>       
+                    <h2>Дата бронювання</h2>
+                    <p class="admin-booking-date">22.02.2026</p>
+                </div>
+                <div>
+                    <h2>Email</h2>
+                    <p class="admin-booking-email">example@gmail.com</p>
+                </div>     
+                <div>
+                    <h2>Номер телефону</h2>
+                    <p class="admin-booking-phone">+38099999999</p>
+                </div>
+                <button class="admin-cansel-booking">Відмінити</button>
+            </div>
+        </div>
+
+        
+        <div class="page1 non-admin">
+            <div class="section section1">
+
+                <div>
+                    <h1>
+                        Вітаємо у Тихій Воді
+                    </h1>
+                    <p>
+                        Ідеальне місце для спокійної риболовлі, сімейного відпочинку та незабутніх моментів на природі.
+                    </p>
+                </div>
+            
+                <div>
+                    <img src="./photos/im1.png" alt="">
+                </div>
+            
+            </div>
+            <div class="section section2">
+                <div>
+                    <h1>Ласкаво просимо до нашої водойми</h1>
+                    <p>Ласкаво просимо до "Тихої Води" — оазису спокою та гармонії, де кожен знайде щось для себе. Ми пропонуємо більше, ніж просто риболовлю; це місце, де ви можете відпочити від міської метушні, насолодитися природою та створити незабутні спогади з близькими. Наші чисті води, затишні альтанки та привітний персонал забезпечать вам безтурботний відпочинок.</p>
+
+                </div>
+                
+            </div>
+            <div class="section section3">
+                <h1>Наші Послуги</h1>
+                <div class="services">
+                    <div>
+                        <img src="./photos/greenSalmon.png" alt="">
+                        <h1>Елітна риболовля</h1>
+                        <p>Насолоджуйтесь виловом трофейної риби в наших водах.</p>
+                        
+                    </div>
+                    <div>
+                        <img src="./photos/greenSalmon.png" alt="">
+                        <h1>Затишні альтанки</h1>
+                        <p>Комфортні місця для відпочинку з сімєю або друзями біля води.</p>
+                        
+                    </div>
+                    <div>
+                        <img src="./photos/greenSalmon.png" alt="">
+                        <h1>Прокат спорядження</h1>
+                        <p>Повне обладнання для успішної риболовлі та відпочинку.</p>
+                        
+                    </div>
+                    <div>
+                        <img src="./photos/greenSalmon.png" alt="">
+                        <h1>Організація заходів</h1>
+                        <p>Проведення корпоративів та святкувань на природі.</p>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="section section4">
+                <h1>Турніри</h1>
+
+                <div class="tournaments">
+                    <div>
+                        <h1>Карповий Бум</h1>
+                        <h1>23 червня</h1>
+                        <p>Щорічний турнір для любителів рибалки на , обіцяємо хороші трофеї і незабуваємі емоції!</p>
+                    </div>
+                    <div>
+                        <h1>Осінній кубок</h1>
+                        <h1>23 жовтня</h1>
+                        <p>Щорічний турнір для досвідчених рибалок. Великі призи та незабутні емоції.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page2 non-admin">
+            <div class="section section1">
+
+            <div>
+                <h1>
+                    Відпочинок у Тихій Воді
+                </h1>
+                <p>
+                    Тиха Вода — це ідеальне місце для тих, хто шукає спокою, гармонії з природою та незабутньої риболовлі. Наша база відпочинку розташована в мальовничому куточку, де кожен знайде щось для душі. Ми пропонуємо комфортні умови для відпочинку, чисте озеро та безліч можливостей для активного проведення часу.
+                </p>
+            </div>
+            
+            <div>
+                <img id="pg2img" src="./photos/im6.png" alt="">
+            </div>
+            
+            </div>
+
+            <div class="section section3">
+                <h1>Наші Переваги</h1>
+                <div class="services serpage2">
+                    <div>
+                        <img src="./photos/greenSalmon.png" alt="">
+                        <h1>Вдала рибалка</h1>
+                        <p>Відкрийте для себе найкращі місця для риболовлі з великою кількістю риби, гарантуючи незабутній улов.</p>
+                        
+                    </div>
+                    <div>
+                        <img src="./photos/greenSalmon.png" alt="">
+                        <h1>Затишні Альтанки</h1>
+                        <p>Комфортні альтанки для відпочинку з сім'єю та друзями, обладнані всім необхідним для приємного проведення часу.</p>
+                        
+                    </div>
+                    <div>
+                        <img src="./photos/greenSalmon.png" alt="">
+                        <h1>Тиха Природа</h1>
+                        <p>Це ідеальне місце, щоб повністю перезавантажитись, відновити сили та відчути єднання з навколишнім світом.</p>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="placement section">
+                <h1>Розташування та схема озера</h1>
+                <div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3172.9369266764907!2d23.611913124801745!3d48.030877303665484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1suk!2sua!4v1772809512492!5m2!1suk!2sua" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <img src="photos/im7.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="page3 non-admin">
+            <div class=" section-al">
+                <div class="altankas">
+                    <img src="photos/al8.png" alt="">
+                    <div>
+                        <h2>Альтанка (8 місць)</h2>
+                        <p>600грн/доба</p>
+                        <button class="book-btn">Забронювати</button>
+                    </div>
+                </div>
+                <div class="altankas">
+                    <img src="photos/al12.png" alt="">
+                    <div>
+                        <h2>Альтанка (12 місць)</h2>
+                        <p>1000грн/доба</p>
+                        <button class="book-btn">Забронювати</button>
+                    </div>
+                </div>
+                <div class="altankas">
+                    <img src="photos/al.jpg" alt="">
+                    <div>
+                        <h2>Місце  для  рибалки </h2>
+                        <p>300грн/доба</p>
+                        <button class="book-btn">Забронювати</button>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="section section2pg3">
+                <h1>Детальний перелік послуг</h1>
+
+                <div class="accordion">
+
+                    <input type="checkbox" id="opt1">
+
+                    <label class="accordion-header" for="opt1">
+                        <span>Оренда вудилищ і снастей</span>
+                        <img src="photos/down.png">
+                    </label>
+
+                    <div class="accordion-content">
+                        <p>
+                            Вудилище в оренду  100грн / доба
+                            <br>
+                            Спінінг  150 грн / доба
+                            <br>    
+                            Підсак  50 грн / доба
+                            <br>
+                            Садок для риби  50 грн / доба
+                            <br>
+                            Стійка (рогачик) для вудки  30 грн / доба
+                        </p>
+                    </div>
+
+                </div>
+                <div class="accordion">
+
+                    <input type="checkbox" id="opt2">
+
+                    <label class="accordion-header" for="opt2">
+                        <span>Продаж приманок і наживок</span>
+                        <img src="photos/down.png">
+                    </label>
+
+                    <div class="accordion-content">
+                        <p>
+                            Черв’як  30 грн
+                            <br>
+                            Кукурудза  30 грн
+                            <br>
+                            Опариш  40 грн
+                            <br>
+                            Прикормки  на місці
+                        </p>
+                    </div>
+
+                </div>
+                
+                <div class="accordion">
+
+                    <input type="checkbox" id="opt3">
+
+                    <label class="accordion-header" for="opt3">
+                        <span>Оренда човнів</span>
+                        <img src="photos/down.png">
+                    </label>
+
+                    <div class="accordion-content">
+                        <p>
+                            Надувна лодка  300 грн
+                            <br>
+                            Деревяна лодка  600 грн
+                            <br>
+                            Надувна з мотором  500 грн
+                            <br>
+                            Деревяна з мотором  800 грн
+                        </p>
+                    </div>
+
+                </div>
+                <div class="accordion">
+
+                    <input type="checkbox" id="opt4">
+
+                    <label class="accordion-header" for="opt4">
+                        <span>Оренда альтанок</span>
+                        <img src="photos/down.png">
+                    </label>
+
+                    <div class="accordion-content">
+                        <p>
+                            Альтанка на 8 місць 600грн / доба
+                            <br>
+                            Альтанка на 12 місць 1000грн / доба
+                            <br>
+                            При забронюванні всіх альтанок функція буде не доступоню
+                        </p>
+                    </div>
+
+                </div>
+                <div class="accordion">
+
+                    <input type="checkbox" id="opt5">
+
+                    <label class="accordion-header" for="opt5">
+                        <span>Ціни за кг виловленої риби</span>
+                        <img src="photos/down.png">
+                    </label>
+
+                    <div class="accordion-content">
+                        <p>
+                            Короп 100грн кг
+                            <br>
+                            Амур 120грн кг
+                            <br>
+                            Карась до 3кг безплатно, далі 70грн кг
+                            <br>
+                            Товстолоб 200грн кг
+                        </p>
+                    </div>
+                </div>
+                <div class="accordion">
+
+                    <input type="checkbox" id="opt6">
+
+                    <label class="accordion-header" for="opt6">
+                        <span>Інші послуги</span>
+                        <img src="photos/down.png">
+                    </label>
+
+                    <div class="accordion-content">
+                        <p>
+                            Баня 600грн 
+                            <br>
+                            Чан з травами 3000грн
+                            <br>
+                            Массаж 1000грн
+                            <br>
+                            Зйом будиночка 2000грн / доба
+                            <br>
+                            Організація заходів за номером +380123456789
+                            <br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="page4 non-admin">
+            <div class="section section1 pg4sec1">
+
+                <div>
+                    <h1>
+                        Правила поведінки на водоймі
+                    </h1>
+                    <p>
+                        Для комфортного та безпечного відпочинку всіх наших відвідувачів, просимо ознайомитися з основними правилами поведінки на території нашої бази та біля водойми. Ваша співпраця допомагає зберегти красу природи та забезпечити приємне перебування для кожного.
+                    </p>
+                </div>
+            
+                <div>
+                    <img src="./photos/im8.png" alt="">
+                </div>
+            
+            </div>
+            <div class="section section2pg3">
+                <h1>Детальний перелік правил</h1>
+
+                <div class="accordion">
+
+                    <input type="checkbox" id="opt11">
+
+                    <label class="accordion-header" for="opt11">
+                        <span>Загальні правила перебування на території</span>
+                        <img src="photos/down.png">
+                    </label>
+
+                    <div class="accordion-content">
+                        <p>
+                            Не смітити, використовуйте спеціальні сміттєві баки.
+                            <br>
+                            Не порушувати громадський порядок та тишу після 22:00.
+                            <br>    
+                            Дотримуйтесь правил пожежної безпеки.
+                            <br>
+                            Використовуйте територію відповідно до її призначення.
+                        </p>
+                    </div>
+
+                </div>
+                <div class="accordion">
+
+                    <input type="checkbox" id="opt12">
+
+                    <label class="accordion-header" for="opt12">
+                        <span>Правила риболовлі</span>
+                        <img src="photos/down.png">
+                    </label>
+
+                    <div class="accordion-content">
+                        <p>
+                            Дотримуйтесь норм вилову, встановлених місцевими законами.
+                            <br>
+                            Використовувати лише дозволені види снастей.
+                            <br>
+                            Заборонено ловити рибу з човнів у зонах купання.
+                            <br>
+                            Після риболовлі прибирайте рибальські принади та сміття.
+                            
+                            
+                        </p>
+                    </div>
+
+                </div>
+                
+                <div class="accordion">
+
+                    <input type="checkbox" id="opt13">
+
+                    <label class="accordion-header" for="opt13">
+                        <span>Використання альтанок та місць для відпочинку</span>
+                        <img src="photos/down.png">
+                    </label>
+
+                    <div class="accordion-content">
+                        <p>
+                            Альтанки бронюються заздалегідь.
+                            <br>
+                            Максимальна кількість відвідувачів у альтанці зазначена на табличці.
+                            <br>
+                            Не псувати меблі та обладнання альтанок.
+                            <br>
+                            Заборонено залишати вогонь без нагляду.
+                            <br>
+                            Після використання прибирайте за собою територію.
+                        </p>
+                    </div>
+
+                </div>
+                <div class="accordion">
+
+                    <input type="checkbox" id="opt14">
+
+                    <label class="accordion-header" for="opt14">
+                        <span>Безпека на воді</span>
+                        <img src="photos/down.png">
+                    </label>
+
+                    <div class="accordion-content">
+                        <p>
+                            Купання тільки у визначених місцях.
+                            <br>
+                            Діти до 12 років купаються лише під наглядом дорослих.
+                            <br>
+                            Заборонено запливати за межі зони безпеки.
+                            <br>
+                            Використання плавзасобів лише з рятувальними жилетами.
+                            <br>
+                            При виникненні небезпечних ситуацій негайно повідомляти адміністрацію.
+                        </p>
+                    </div>
+
+                </div>
+                
+                <div class="accordion">
+
+                    <input type="checkbox" id="opt16">
+
+                    <label class="accordion-header" for="opt16">
+                        <span>Паркування транспорту</span>
+                        <img src="photos/down.png">
+                    </label>
+
+                    <div class="accordion-content">
+                        <p>
+                           Паркування лише у відведених місцях.
+                            <br>
+                            Заборонено залишати автомобілі на газонах та біля водойми.
+                            <br>
+                            Адміністрація не несе відповідальності за пошкодження авто поза парковкою.
+                            <br>
+                            Не блокувати під’їзні шляхи та ворота.  
+                        </p>
+                    </div>
+                </div>
+                <div class="accordion">
+
+                    <input type="checkbox" id="opt17">
+
+                    <label class="accordion-header" for="opt17">
+                        <span>Відповідальність</span>
+                        <img src="photos/down.png">
+                    </label>
+
+                    <div class="accordion-content">
+                        <p>
+                            Відвідувачі несуть відповідальність за своє майно та дії.
+                            <br>
+                            Адміністрація не несе відповідальності за порушення правил відпочинку.
+                            <br>
+                            У разі пошкодження майна бази – відшкодування обов’язкове.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page5 non-admin">
+            <div class="section sc1">
+                <img src="photos/fisherman.jpg" alt="">
+                <div class="pg5sec1">
+                    <h1>Найбільші трофеї</h1>
+                    <p>Перегляньте вражаючі улови наших рибалок. Кожен трофей - це свідчення майстерності, терпіння та любові до риболовлі.</p>
+                </div>
+            </div>
+            <div class="section pg5sec2">
+                <h1>Нещодавні трофеї</h1>
+                <div class="grid-photos">
+                    <img src="photos/fish1.webp" alt="">
+                    <img src="photos/fish2.jpg" alt="">
+                    <img src="photos/fish3.webp" alt="">
+                    <img src="photos/fish4.webp" alt="">
+                    <img src="photos/fish5.jpg" alt="">
+                    <img src="photos/fish 5.jpg" alt="">
+                    <img src="photos/fish7.jpg" alt="">
+                    <img src="photos/fish8.jpg" alt="">
+                </div>
+                <button class="trophies-btn" id="more-tr-btn">Більше трофеїв</button>
+
+            </div>
+        </div>
+        <div class="page6 non-admin">
+            <div class="section pg6sec1">
+                <div class="subsectionpg6">
+                    <h1>Найближчі Риболовні Турніри</h1>
+                    <p>Відкрийте для себе захопливий світ змагань з риболовлі. Дізнайтеся про майбутні події, правила участі та зареєструйтеся вже сьогодні!</p>
+                </div>
+                <img src="photos/tournament.jpg" alt="">
+
+            </div>
+            <div class="section section3">
+                <h1>Календар подій</h1>
+                <div class="services serpage2">
+                    <div class="tour-div">
+                        <img class="tour-img" src="./photos/p3.jpg" alt="">
+                        <h1>Осінній кубок</h1>
+                        <p class="date">24 жовтня</p>
+                    </div>
+                    <div class="tour-div">
+                        <img class="tour-img" src="./photos/p1.jpg" alt="">
+                        <h1>Весняна щука</h1>
+                        <p class="date">15 травня</p>
+                    </div >
+                    <div class="tour-div">
+                        <img class="tour-img" src="./photos/p2.jpg" alt="">
+                        <h1>Короповий Бум</h1>
+                        <p class="date">24 червня</p>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="section pg6sec4">
+                <h1>Правила участі</h1>
+                <p class="date">
+                    Загальні правила участі
+                </p>
+                <p>
+                    1. До участі допускаються особи старше 18 років. Особи від 14 до 18 років можуть брати участь лише у супроводі дорослих. <br>
+2. Реєстрація на турнір є обов'язковою та здійснюється заздалегідь через офіційний сайт або на місці проведення, якщо це дозволено організаторами. <br>
+3. Учасники повинні дотримуватися правил поводження на водоймі та поважати інших рибалок. <br>
+4. Заборонено використання заборонених знарядь лову або методів, що суперечать законодавству України та місцевим правилам риболовлі.
+                </p>
+                <p class="date">
+                    Правила лову
+                </p>
+                <p>
+                    1. Дозволяється використання лише однієї вудки (спінінга) на одного учасника, якщо інше не зазначено в умовах конкретного турніру. <br>
+2. Використання живої наживки може бути обмежено або заборонено для певних турнірів. Детальну інформацію дивіться в положенні турніру. <br>
+3. Вся спіймана риба, що не відповідає мінімальному розміру або виду, повинна бути негайно відпущена назад у водойму з мінімальними пошкодженнями (принцип "зловив-відпусти"). <br>
+4. Вага та розмір трофейної риби фіксуються суддями.     
+                </p>
+                <p class="date">
+                    Реєстрація і внески
+                </p>
+                <p>
+                    1. Для реєстрації необхідно заповнити онлайн-форму та сплатити реєстраційний внесок при приході на місце де проводиться турнір<br>
+2. Розмір реєстраційного внеску та спосіб оплати вказані на сторінці кожного турніру. 
+
+                </p>
+                <p class="date">
+                    Визначення переможця
+                </p>
+                <p>
+                    1. Переможці визначаються за найбільшою сумарною вагою улову або за вагою найбільшої спійманої риби, залежно від умов турніру. <br>
+2. Усі рішення суддів є остаточними та не підлягають оскарженню. <br>
+3. Церемонія нагородження відбудеться після закінчення турніру.
+                </p>
+            </div>
+        </div>
+        <div class="advert section non-admin">
+            <h1>Готові до незабутнього відпочинку?</h1>
+            <p>Забронюйте свій візит до "Тихої Води" вже сьогодні і відчуйте справжню гармонію з природою.</p>
+            <button class="book-btn">Забронювати</button>    
+        </div>
+    </main>
+    <div class="booking-form-div non-admin">
+        <form id="booking-form">
+            <input type="text" placeholder="Ваше імя" id="booking-name">
+            <input type="email" placeholder="Електронна пошта" id="booking-email">
+            <input type="tel" placeholder="Номер телефону" id="booking-tel">
+            <input type="date" id="booking-date">
+
+            <div class="booking-form-element">
+                <label for="al8">Альтанка на 8чол.</label>
+                <input class="booking-radio" type="radio" name="rad" id="al8" value="al8">
+            </div>
+
+            <div class="booking-form-element">
+                <label for="al12">Альтанка на 12чол.</label>
+                <input class="booking-radio" type="radio" name="rad" id="al12" value="al12">
+            </div>
+
+            <div class="booking-form-element">
+                <label for="fishing-spot">Місце для рибалки</label>
+                <input class="booking-radio" type="radio" name="rad" id="fishing-spot" value="fish_spot">
+            </div>
+
+            <button type="button" id="booking-form-btn">Забронювати</button>
+        </form>
+    </div>
+
+    <div class="form-div non-admin">
+        <form id="login-form" >
+
+ 
+            <input type="email" name="loginEmail" required placeholder="Eлектроннa поштa" id="login-mail">
+
+
+            <div class="form-element">
+                <input type="password" name="loginPassword" placeholder="Пароль" required id="login-pass">
+                <button class="eye" id="login-eye" type="button">
+                    <img src="photos/eye.png" alt="">
+                </button>
+            </div>
+            
+            <a id="register-link" href="#">Зареєструватись</a>
+
+            <button id="login-btn" class="form-btn" >Увійти</button>
+
+        </form>
+
+        <form id="register-form" >
+
+            <input type="text" name="regName" placeholder="Повне ім'я" required id="register-name">
+
+
+            <div class="form-element">
+                <input type="password" name="regPassword" placeholder="Пароль" required id="register-pass">
+                <button  class="eye" id="reg-eye">
+                    <img src="photos/eye.png"  alt="">
+                </button>
+                
+            </div>
+
+
+            <input type="email" name="regEmail" required placeholder="Eлектроннa поштa" id="register-mail">
+
+
+            <div class="a-div">
+                <a class="login-link" id="login-link" href="#">Зайти</a>
+                <a class="login-link" id="forgot-password" href="#">Забув пароль</a>
+            </div>
+
+            <button id="register-btn" class="form-btn" >Зареєструватись</button>
+        </form>
+
+    </div>
+    <div class="prifile-div non-admin">
+
+        <div class="profile-div-img"></div>
+
+        <div class="profile-div-content">
+            <div id="profile-content-img">
+                <img src="photos/profile2.png" alt="">
+            </div>
+            <div id="profile-content">
+                
+                <form id="profile-form" action="">
+                    <div class="profile-info">
+
+                        <div >
+                            <h1>Профіль</h1>
+                            <p>Тут можна обновити свої персональні дані</p>
+                        </div>
+
+                        <button id="profile-save-btn" type="button">Зберегти</button>
+                    </div>
+
+                    <div class="profile-element">
+                        <label for="profile-name">Ваше імя</label>
+                        <input type="name" id="profile-name">
+                    </div>
+
+                    <div class="profile-element">
+                        <label for="profile-email">Ваш email</label>
+                        <input type="email" disabled id="profile-email">
+                    </div>
+
+                    <div class="profile-element">
+                        <label for="profile-tel">Ваш номер</label>
+                        <input type="tel" id="profile-tel">
+                    </div>
+                    <div class="profile-element">
+                        <p id="discount">Ваша знижка становить: 15%</p>
+                    </div>
+
+                    
+                    
+
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="bookings-div non-admin">
+        <h1>Історія бронювань</h1>
+        <div class="booking-div">
+            <div>
+                <h2>Тип Бронювання</h2>
+                 <p class="booking type">
+                Альтанка на 8 чоловік</p>
+            </div>
+            <div>       
+                <h2>Дата бронювання</h2>
+                <p class="booking-date">22.02.2026</p>
+            </div>     
+            <button class="cansel-booking">Відмінити</button>
+        </div>
+          
+          
+    </div>
+    <footer class="non-admin">
+        <div id="footer">
+            <a href="index.html"><img src="photos/greenSalmon.png" class="logo" alt=""></a>
+        <div class="contacts">
+            <h1>Контакти</h1>
+            <p>+380123456789</p>
+            <p>+380987654321</p>
+        </div>
+        <div class="soc">
+            <h1>Соціальні мережі</h1>
+            <div class="socials">
+                <a href="\"><img src="photos/insta (4).png" alt="" class="logo"></a>
+                <a href="\"><img src="photos/insta .png" alt="" class="logo"></a>
+                <a href="\"><img src="photos/x.png" alt="" class="logo"></a>
+                <a href="\"><img src="photos/in.png" alt="" class="logo"></a>
+
+            </div>
+        </div>
+        </div>
+        <span id="abs-span">© Calm Waters  <br>All Rights Reserved</span>
+    </footer>
+    
+
+    <script src="js/js.js"></script>
+</body>
+</html>

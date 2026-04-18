@@ -1,0 +1,146 @@
+body{
+    padding-top: 70px;
+}
+
+.header{
+    position: fixed;
+    left: 0;
+    right: 0;
+    display: flex;
+    top: 0;
+    height: 70px;
+    padding: 10px;
+    background-color: var(--light-gray);
+    align-items: center;
+}
+.header img {
+    height: 50px;
+}
+#bhnd-logo{
+    background-color: var(--dark-green);
+    border-radius: 16px;
+    margin-right: 350px;
+}
+
+.header a {
+    color: black;
+    font-size: 26px;
+    transition: 0.15s ;
+}
+.header a:active {
+    color: var(--dark-green);
+    
+}
+.mid-header{
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.header .book-btn{
+    margin-left: 350px;
+    margin-right: 20px;
+}
+.book-btn,.trophies-btn {
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 18px;
+    color:white;
+    background-color: var(--dark-green);
+}
+.profile-btn{
+    background-color: transparent;
+}
+.mid-header a:first-child{
+    color: var(--dark-green);
+}
+
+.profile-menu{
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: var(--s-l-green);
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.78); 
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.78);
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s;
+    border-radius: 5px;
+}
+
+.profile-menu a{
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    width: 100%;
+    text-align: center;
+}
+
+.profile-menu a:hover{
+    background: #f0f0f0;
+}
+
+.profile:focus-within .profile-menu{
+    opacity: 1;
+    pointer-events: auto;
+}
+@media screen and (max-width: 3000px) {
+#bhnd-logo{
+    margin-right: 200px;
+}
+
+.profile-btn{
+    margin-left: 400px;
+}
+}
+
+#header-profile,#end-session-btn,#header-bookings{
+display:none;
+}
+
+
+
+@media screen and (max-width: 1300px) {
+    #bhnd-logo{
+        margin-right: 200px;
+    }
+    .profile-btn{
+        margin-left: 0px;
+    }   
+   .header a {
+        color: black;
+        font-size: 20px;
+    }
+}
+@media screen and (max-width: 1000px) {
+    #bhnd-logo{
+        margin-right: 100px;
+    }
+
+}
+@media screen and (max-width: 800px) {
+    #bhnd-logo{
+        margin-right: 10px;
+    }
+
+}
+
+@media (max-width:768px){
+.header .book-btn{
+    display: none;
+}   
+.mid-header a {
+    font-size:14px;
+}}
+
+@media (max-width:480px){
+.header .book-btn{
+    display: none;
+}   
+.mid-header a {
+    font-size: 14px;
+}}
