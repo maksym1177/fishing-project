@@ -5,6 +5,7 @@ const bookingsBtn = document.getElementById("header-bookings");
 const profileBtn = document.getElementById("header-profile");
 const bookingBtn = document.getElementById("booking-form-btn");
 const formDiv = document.querySelector('.form-div');
+const adminLinks = document.querySelectorAll(".adminLink");
 let isLogined = false;
 let isAdmin = false;
 //----------------------------AUTH CHECK-----------------------
@@ -26,7 +27,10 @@ window.addEventListener('load', async () => {
             try {
                 const response = await fetch('/api/admin/bookings/active');
                 if (!response.ok) return;
-
+                adminLinks.forEach((el,id) => {
+                    el.style.display = "block";
+                    if (id == 0){el.style.color = "var(--dark-green)"}
+                });
                 const bookings = await response.json();
                 const container = document.querySelector('.admin-bookings');
 
@@ -96,8 +100,59 @@ window.addEventListener('load', async () => {
         console.error("Помилка перевірки сесії:", error);
     }
 });
+const adminBookings = document.getElementsByClassName("admin-bookings")[0];
+const adminLocations = document.getElementsByClassName("admin-add-loc")[0];
+adminLinks.forEach((el, id) => {
+    el.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
 
+        if (id === 0) {
+            adminBookings.style.display = "block";
+            adminLocations.style.display = "none";
+        } else {
+            adminLocations.style.display = "block";
+            adminBookings.style.display = "none";
+        }
+    };
+});
 
+const addLocationForm = document.getElementById('add-location-form');
+
+if (addLocationForm) {
+    addLocationForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const params = new URLSearchParams();
+        params.append('type', document.getElementById('loc-type').value);
+        params.append('capacity', document.getElementById('loc-capacity').value);
+        params.append('pricePerDay', document.getElementById('loc-price').value);
+        params.append('locationNumber', document.getElementById('loc-number').value);
+        params.append('imageUrl', document.getElementById('loc-image').value);
+        params.append('note', document.getElementById('loc-note').value);
+
+        try {
+            const response = await fetch('/api/admin/add-location', {
+                method: 'POST',
+                body: params,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+
+            const result = await response.text();
+
+            if (result === "success_add") {
+                alert("Локацію успішно додано!");
+                window.location.reload();
+            } else {
+                alert("Помилка: " + result);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    });
+}
 
 async function adminCancelBooking(id) {
     console.log("ID для видалення:", id);

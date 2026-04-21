@@ -183,7 +183,7 @@ public class AuthController {
 
         return bookingRepository.findByUser(user);
     }
-    @Transactional // Додай для надійності PostgreSQL
+    @Transactional
     @DeleteMapping("/bookings/cancel/{id}")
     public String cancelBooking(@PathVariable Integer id, HttpSession session) {
         String currentUserEmail = (String) session.getAttribute("user");
@@ -216,25 +216,50 @@ public class AuthController {
         @Autowired
         private UserRepository userRepository;
 
+        @Autowired
+        private LocationRepository locationRepository;
+
         @GetMapping("/bookings/active")
         public ResponseEntity<?> getActiveBookings(HttpSession session) {
             Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
             if (Boolean.TRUE.equals(isAdmin)) {
-
                 List<Booking> active = bookingRepository.findAllByDateAfterOrderByDateAsc(LocalDate.now());
                 return ResponseEntity.ok(active);
             }
             return ResponseEntity.status(403).body("Доступ заборонено");
         }
+
+        @PostMapping("/add-location")
+        public String addLocation(@RequestParam String type,
+                                  @RequestParam Integer capacity,
+                                  @RequestParam Double pricePerDay,
+                                  @RequestParam String locationNumber,
+                                  @RequestParam(required = false) String imageUrl,
+                                  @RequestParam(required = false) String note,
+                                  HttpSession session) {
+
+            Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
+            if (!Boolean.TRUE.equals(isAdmin)) {
+                return "error_no_permission";
+            }
+
+            Location newLocation = new Location();
+            newLocation.setType(type);
+            newLocation.setCapacity(capacity);
+            newLocation.setPricePerDay(pricePerDay);
+            newLocation.setLocationNumber(locationNumber);
+            newLocation.setImageUrl(imageUrl);
+            newLocation.setNote(note);
+
+            locationRepository.save(newLocation);
+            return "success_add";
+        }
+
         private boolean checkIfAdmin(Integer id) {
             return userRepository.findById(id)
                     .map(User::isAdmin)
                     .orElse(false);
         }
-
-
-
-
     }
 
 

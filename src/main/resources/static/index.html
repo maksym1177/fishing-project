@@ -19,13 +19,15 @@
         
         <a id= "bhnd-logo"href="index.html"><img class="logo" src="./photos/salmon.png" alt=""></a>
 
-        <div  class="mid-header">
+        <div class="mid-header">
             <a class="non-admin" href="">Головна</a>
             <a class="non-admin" href="">Про Нас</a>
             <a class="non-admin" href="">Послуги</a>
             <a class="non-admin" href="">Правила</a>
             <a class="non-admin" href="">Трофеї</a>
             <a class="non-admin" href="">Турніри</a>
+            <a class="admin adminLink" id="adminLink1" href="">Всі бронювання</a>
+            <a class="admin adminLink" id="adminLink2" href="">Додати локацію</a>
         </div>
         <div class="profile">
             <button class="profile-btn">
@@ -66,7 +68,48 @@
                 <button class="admin-cansel-booking">Відмінити</button>
             </div>
         </div>
+        <div class="admin admin-add-loc">
+            <h1>Додати нову локацію</h1>
+            <form id="add-location-form" class="admin-form">
+                <div class="form-group">
+                    <label for="loc-number">Номер</label>
+                    <input type="text" id="loc-number" name="locationNumber" placeholder="Введіть номер..." required>
+                </div>
 
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="loc-type">Тип Локації</label>
+                        <select id="loc-type" name="type" required>
+                            <option value="al8">Альтанка на 8 (al8)</option>
+                            <option value="al12">Альтанка на 12 (al12)</option>
+                            <option value="fish_spot">Рибалка (fish_spot)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="loc-capacity">Місткість (чол)</label>
+                        <input type="number" id="loc-capacity" name="capacity" value="14" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="loc-price">Ціна за день (грн)</label>
+                        <input type="number" id="loc-price" name="pricePerDay" placeholder="600" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loc-image">URL зображення</label>
+                        <input type="text" id="loc-image" name="imageUrl" placeholder="https://...">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="loc-note">Примітка (опис)</label>
+                    <textarea id="loc-note" name="note" rows="3" placeholder="Опишіть локацію..."></textarea>
+                </div>
+
+                <button type="submit" id="save-location-btn">Зберегти локацію</button>
+            </form>
+        </div>
         
         <div class="page1 non-admin">
             <div class="section section1">

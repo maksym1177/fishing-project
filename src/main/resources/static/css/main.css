@@ -744,7 +744,8 @@ height: 200px;
     overflow-y: auto;
 }
 .admin-bookings h1,
-.bookings-div h1{
+.bookings-div h1,
+.admin-add-loc h1{
     margin-top: 10px;
     font-size: 36px;
     text-align: center;
@@ -936,6 +937,87 @@ height: 200px;
 
 }
 
+
+
+/* ---------------------------LOCATIONS-------------------------------------- */
+
+
+.admin-panel-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border: 1px solid #eee;
+}
+
+.admin-panel-container h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--dark-green);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.admin-form label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.admin-form input:focus {
+    border-color: var(--dark-green);
+}
+
+#save-location-btn {
+    background: var(--dark-green);
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+#save-location-btn:hover {
+    background: #1e332a;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
 
 /* ----------------------MAIN MEDIA----------------------------- */
 
