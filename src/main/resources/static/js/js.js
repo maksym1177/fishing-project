@@ -320,51 +320,74 @@ async function loadMyBookings() {
         const response = await fetch('/api/user/my-bookings');
 
         if (!response.ok) {
-            if (isLogined) container.innerHTML = '<h1>Помилка завантаження</h1>';
+            if (typeof isLogined !== 'undefined' && isLogined) {
+                container.innerHTML = '<h1>Помилка завантаження</h1>';
+            }
             return;
         }
 
         const bookings = await response.json();
-        container.innerHTML = '<h1>Історія бронювань</h1>';
 
         if (!bookings || bookings.length === 0) {
-            container.innerHTML += '<p style="padding:20px;">У вас ще немає бронювань.</p>';
+            container.innerHTML = '<h1>Бронювання</h1><p style="padding:20px;">У вас ще немає бронювань.</p>';
             return;
         }
 
-        bookings.forEach(booking => {
-            const loc = booking.location;
-            let typeName = "Послуга";
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
 
-            if (loc && loc.type) {
-                switch(loc.type.trim()) {
-                    case "al8": typeName = "Альтанка на 8чол"; break;
-                    case "al12": typeName = "Альтанка на 12чол"; break;
-                    case "fish_spot": typeName = "Місце для рибалки"; break;
-                    default: typeName = "Локація: " + loc.type;
-                }
+        const activeBookings = bookings.filter(b => new Date(b.date) >= now);
+        const pastBookings = bookings.filter(b => new Date(b.date) < now);
+
+        function getTypeName(loc) {
+            if (!loc || !loc.type) return "Послуга";
+            switch(loc.type.trim()) {
+                case "al8": return "Альтанка на 8чол";
+                case "al12": return "Альтанка на 12чол";
+                case "fish_spot": return "Місце для рибалки";
+                default: return "Локація: " + loc.type;
             }
+        }
 
-            const bookingHtml = `
+        function generateBookingMarkup(booking, canCancel) {
+            return `
                 <div class="booking-div">
                     <div>
                         <h2>Тип Бронювання</h2>
-                        <p class="booking-type">${typeName}</p>
+                        <p class="booking-type">${getTypeName(booking.location)}</p>
                     </div>
                     <div>
                         <h2>Дата бронювання</h2>
                         <p class="booking-date">${booking.date}</p>
                     </div>
-                    <button class="cansel-booking" onclick="cancelBooking(${booking.id})">Відмінити</button>
+                    ${canCancel ? `<button class="cansel-booking" onclick="cancelBooking(${booking.id})">Відмінити</button>` : ''}
                 </div>
             `;
-            container.innerHTML += bookingHtml;
-        });
+        }
+
+        let content = '';
+
+        if (activeBookings.length > 0) {
+            content += '<h1>Активні бронювання</h1>';
+            activeBookings.forEach(b => {
+                content += generateBookingMarkup(b, true);
+            });
+        }
+
+        if (pastBookings.length > 0) {
+            content += '<h1 style="margin-top:40px;">Минулі бронювання</h1>';
+            pastBookings.forEach(b => {
+                content += generateBookingMarkup(b, false);
+            });
+        }
+
+        container.innerHTML = content;
 
     } catch (error) {
         console.error("Помилка завантаження бронювань:", error);
     }
 }
+
 document.addEventListener('DOMContentLoaded', loadMyBookings);
 
 
@@ -590,6 +613,7 @@ bookBtns.forEach((btn, id) => {
 });
 document.addEventListener('click', (e) => {
     const modals = [formDiv, profileDiv, bookingsDiv, bookForm];
+
     modals.forEach(modal => {
         if (modal && modal.style.display === 'block' && !modal.contains(e.target)) {
             const isTrigger = [pLogin, bookingsBtn, profileBtn].includes(e.target);

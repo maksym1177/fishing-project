@@ -105,49 +105,62 @@ public class AuthController {
                                 @RequestParam(required = false) String guestEmail,
                                 @RequestParam(required = false) String guestPhone,
                                 HttpSession session) {
-
-        if (type == null) return "error_location_not_found";
-
-        Optional<Location> locationOpt = locationRepository.findByType(type.trim());
-        if (locationOpt.isEmpty()) {
-            return "error_location_not_found";
-        }
-
-        Location location = locationOpt.get();
-
-        LocalDate bookingDate;
         try {
-            bookingDate = LocalDate.parse(date);
-        } catch (Exception e) {
-            return "error_date_format";
-        }
+            if (type == null || type.isEmpty()) return "error_location_not_found";
 
-        long alreadyBooked = bookingRepository.countByLocationAndDate(location, bookingDate);
-        if (alreadyBooked >= 14) {
-            return "error_no_vacancy";
-        }
+            Optional<Location> locationOpt = locationRepository.findByType(type.trim());
+            if (locationOpt.isEmpty()) return "error_location_not_found";
 
-        Booking booking = new Booking();
-        booking.setLocation(location);
-        booking.setDate(bookingDate);
+            Location location = locationOpt.get();
 
-        String userEmail = (String) session.getAttribute("user");
-        if (userEmail != null) {
-            User user = userRepository.findByEmail(userEmail);
-            if (user != null) {
-                booking.setUser(user);
-                booking.setGuestName(user.getUsername());
-                booking.setGuestEmail(user.getEmail());
-                booking.setGuestPhone(user.getPhone());
+            LocalDate bookingDate;
+            try {
+                if (date.contains(".")) {
+                    java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                    bookingDate = LocalDate.parse(date, formatter);
+                } else {
+                    bookingDate = LocalDate.parse(date);
+                }
+            } catch (Exception e) {
+                return "error_date_format";
             }
-        } else {
-            booking.setGuestName(guestName);
-            booking.setGuestEmail(guestEmail);
-            booking.setGuestPhone(guestPhone);
-        }
 
-        bookingRepository.save(booking);
-        return "success_booking";
+            if (bookingDate.isBefore(LocalDate.now())) {
+                return "error_past_date";
+            }
+
+            long alreadyBooked = bookingRepository.countByLocationAndDate(location, bookingDate);
+            if (alreadyBooked >= 14) return "error_no_vacancy";
+
+            Booking booking = new Booking();
+            booking.setLocation(location);
+            booking.setDate(bookingDate);
+            booking.setPrice(0);
+            booking.setIspaid(false);
+
+            String userEmail = (String) session.getAttribute("user");
+            if (userEmail != null) {
+                User user = userRepository.findByEmail(userEmail);
+                if (user != null) {
+                    booking.setUser(user);
+                    booking.setGuestName(user.getUsername());
+                    booking.setGuestEmail(user.getEmail());
+                    booking.setGuestPhone(user.getPhone());
+                }
+            } else {
+                if (guestName == null || guestName.isEmpty()) return "error_missing_info";
+                booking.setGuestName(guestName);
+                booking.setGuestEmail(guestEmail);
+                booking.setGuestPhone(guestPhone);
+            }
+
+            bookingRepository.save(booking);
+            return "success_booking";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error_internal_server";
+        }
     }
 
 
