@@ -38,23 +38,28 @@ window.addEventListener('load', async () => {
                 container.innerHTML = '';
                 if (title) container.appendChild(title);
 
-                bookings.forEach(booking => {
-                    const loc = booking.location;
-                    let typeName = "Послуга";
+                const now = new Date();
+                now.setHours(0, 0, 0, 0);
 
-                    if (loc && loc.type) {
-                        switch(loc.type) {
-                            case "al8": typeName = "Альтанка на 8чол"; break;
-                            case "al12": typeName = "Альтанка на 12чол"; break;
-                            case "fish_spot": typeName = "Місце для рибалки"; break;
-                            default: typeName = "Невідома послуга";
-                        }
+                const activeBookings = bookings.filter(b => new Date(b.date) >= now);
+                const pastBookings = bookings.filter(b => new Date(b.date) < now);
+
+                function getTypeName(loc) {
+                    if (!loc || !loc.type) return "Послуга";
+                    switch(loc.type) {
+                        case "al8": return "Альтанка на 8чол";
+                        case "al12": return "Альтанка на 12чол";
+                        case "fish_spot": return "Місце для рибалки";
+                        default: return "Невідома послуга";
                     }
-                    const html = `
-                        <div id = "admin-delete-${booking.id}" class="admin-booking-div">
+                }
+
+                function generateMarkup(booking, canCancel) {
+                    return `
+                        <div id="admin-delete-${booking.id}" class="admin-booking-div">
                             <div>
                                 <h2>Тип Бронювання</h2>
-                                <p class="admin-booking-type">${typeName}</p>
+                                <p class="admin-booking-type">${getTypeName(booking.location)}</p>
                             </div>
                             <div>
                                 <h2>Дата бронювання</h2>
@@ -68,16 +73,29 @@ window.addEventListener('load', async () => {
                                 <h2>Номер телефону</h2>
                                 <p class="admin-booking-phone">${booking.guestPhone || 'не вказано'}</p>
                             </div>
-
-                            <button class="admin-cansel-booking" onclick="adminCancelBooking(${booking.id})">Відмінити</button>
+                            ${canCancel ? `<button class="admin-cansel-booking" onclick="adminCancelBooking(${booking.id})">Відмінити</button>` : ''}
                         </div>`;
-                    container.insertAdjacentHTML('beforeend', html);
-                });
+                }
+
+                if (activeBookings.length > 0) {
+                    container.insertAdjacentHTML('beforeend', '<h1>Активні бронювання</h1>');
+                    activeBookings.forEach(b => {
+                        container.insertAdjacentHTML('beforeend', generateMarkup(b, true));
+                    });
+                }
+
+                if (pastBookings.length > 0) {
+                    container.insertAdjacentHTML('beforeend', '<h1 style="margin-top:40px;">Минулі бронювання</h1>');
+                    pastBookings.forEach(b => {
+                        container.insertAdjacentHTML('beforeend', generateMarkup(b, false));
+                    });
+                }
 
             } catch (err) {
                 console.error("Помилка:", err);
             }
         }
+
         }
         if (data.authenticated) {
             if (loginBtn) loginBtn.style.display = "none";

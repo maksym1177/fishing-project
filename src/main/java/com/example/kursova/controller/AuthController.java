@@ -236,8 +236,8 @@ public class AuthController {
         public ResponseEntity<?> getActiveBookings(HttpSession session) {
             Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
             if (Boolean.TRUE.equals(isAdmin)) {
-                List<Booking> active = bookingRepository.findAllByDateAfterOrderByDateAsc(LocalDate.now());
-                return ResponseEntity.ok(active);
+                List<Booking> allBookings = bookingRepository.findAll();
+                return ResponseEntity.ok(allBookings);
             }
             return ResponseEntity.status(403).body("Доступ заборонено");
         }
