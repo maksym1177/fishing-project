@@ -337,7 +337,6 @@ async function loadMyBookings() {
             let typeName = "Послуга";
 
             if (loc && loc.type) {
-                // ВАЖЛИВО: Назви в case мають точно збігатися з текстом у базі
                 switch(loc.type.trim()) {
                     case "al8": typeName = "Альтанка на 8чол"; break;
                     case "al12": typeName = "Альтанка на 12чол"; break;
@@ -580,14 +579,23 @@ const setupTrigger = (btn, target) => {
 setupTrigger(pLogin, formDiv);
 setupTrigger(bookingsBtn, bookingsDiv);
 setupTrigger(profileBtn, profileDiv);
-bookBtns.forEach(btn => setupTrigger(btn, bookForm));
-//test
+bookBtns.forEach((btn, id) => {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleDisplay(bookForm, true);
+        if (id === 0) document.getElementById("al8").checked = true;
+        else if (id === 1) document.getElementById("al12").checked = true;
+        else if (id === 2) document.getElementById("fishing-spot").checked = true;
+    });
+});
 document.addEventListener('click', (e) => {
     const modals = [formDiv, profileDiv, bookingsDiv, bookForm];
-    
     modals.forEach(modal => {
         if (modal && modal.style.display === 'block' && !modal.contains(e.target)) {
-            toggleDisplay(modal, false);
+            const isTrigger = [pLogin, bookingsBtn, profileBtn].includes(e.target);
+            if (!isTrigger) {
+                toggleDisplay(modal, false);
+            }
         }
     });
 });
