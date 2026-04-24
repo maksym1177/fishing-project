@@ -526,7 +526,10 @@ const pages = document.querySelectorAll("[class^='page']");
 links.forEach((link, index) => {
     link.addEventListener("click", (e) => {
         e.preventDefault();
-
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
         pages.forEach(page => page.style.display = "none");
         links.forEach(l => l.style.color = "black");
 
