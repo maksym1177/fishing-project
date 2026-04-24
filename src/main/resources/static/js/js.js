@@ -604,24 +604,25 @@ const pLogin = document.getElementById('profile-login');
 const profileDiv = document.getElementsByClassName('prifile-div')[0];
 const bookingsDiv = document.getElementsByClassName('bookings-div')[0];
 const bookForm = document.querySelector('.booking-form-div');
-
+const allViews = [formDiv, bookingsDiv, profileDiv];
 
 const toggleDisplay = (element, show = true) => {
     if (element) element.style.display = show ? 'block' : 'none';
 };
 
 
-const setupTrigger = (btn, target) => {
+const setupTrigger = (btn, target,oppos = 0) => {
     if (btn && target) {
         btn.onclick = (e) => {
             e.stopPropagation();
+            allViews.forEach(view => toggleDisplay(view, false));
             toggleDisplay(target, true);
         };
     }
 };
 
-setupTrigger(pLogin, formDiv);
-setupTrigger(bookingsBtn, bookingsDiv);
+setupTrigger(pLogin, formDiv,bookingsDiv);
+setupTrigger(bookingsBtn, bookingsDiv,formDiv);
 setupTrigger(profileBtn, profileDiv);
 bookBtns.forEach((btn, id) => {
     btn.addEventListener('click', (e) => {
