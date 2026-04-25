@@ -16,12 +16,14 @@ import java.util.List;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
     List<Booking> findByUser(User user);
-    long countByLocationAndDate(Location location, LocalDate date);
+
+    @Query("SELECT COUNT(b) FROM Booking b WHERE b.location.type = :type AND b.date = :date")
+    long countByLocationTypeAndDate(@Param("type") String type, @Param("date") LocalDate date);
+
     List<Booking> findAllByDateAfterOrderByDateAsc(LocalDate date);
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Booking b WHERE b.id = :id")
     void deleteBookingById(@Param("id") Integer id);
-
-
 }

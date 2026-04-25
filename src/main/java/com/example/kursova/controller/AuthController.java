@@ -108,19 +108,14 @@ public class AuthController {
         try {
             if (type == null || type.isEmpty()) return "error_location_not_found";
 
-            Optional<Location> locationOpt = locationRepository.findByType(type.trim());
-            if (locationOpt.isEmpty()) return "error_location_not_found";
+            List<Location> locations = locationRepository.findByType(type.trim());
+            if (locations.isEmpty()) return "error_location_not_found";
 
-            Location location = locationOpt.get();
+            Location targetLocation = locations.get(0);
 
             LocalDate bookingDate;
             try {
-                if (date.contains(".")) {
-                    java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy");
-                    bookingDate = LocalDate.parse(date, formatter);
-                } else {
-                    bookingDate = LocalDate.parse(date);
-                }
+                bookingDate = LocalDate.parse(date);
             } catch (Exception e) {
                 return "error_date_format";
             }
@@ -129,11 +124,12 @@ public class AuthController {
                 return "error_past_date";
             }
 
-            long alreadyBooked = bookingRepository.countByLocationAndDate(location, bookingDate);
+            long alreadyBooked = bookingRepository.countByLocationTypeAndDate(type.trim(), bookingDate);
+
             if (alreadyBooked >= 14) return "error_no_vacancy";
 
             Booking booking = new Booking();
-            booking.setLocation(location);
+            booking.setLocation(targetLocation);
             booking.setDate(bookingDate);
             booking.setPrice(0);
             booking.setIspaid(false);

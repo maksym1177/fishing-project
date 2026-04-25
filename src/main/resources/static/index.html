@@ -655,29 +655,46 @@
             <button class="book-btn">Забронювати</button>    
         </div>
     </main>
-    <div class="booking-form-div non-admin">
+    <div class="booking-form-div">
         <form id="booking-form">
-            <input type="text" placeholder="Ваше імя" id="booking-name">
-            <input type="email" placeholder="Електронна пошта" id="booking-email">
-            <input type="tel" placeholder="Номер телефону" id="booking-tel">
-            <input type="date" id="booking-date">
 
-            <div class="booking-form-element">
-                <label for="al8">Альтанка на 8чол.</label>
-                <input class="booking-radio" type="radio" name="rad" id="al8" value="al8">
+            <div id="booking-section-1">
+                <p>1. Оберіть дату</p>
+                <div id="date-selects">
+                    <select id="month-select" class="custom-select"></select>
+                    <select id="year-select" class="custom-select"></select>
+                </div>
+
+                <div id="days-container"></div>
+                <input type="hidden" id="selected-date" name="date">
+
+                <button type="button" id="date-pick-btn" class="form-btn" style="width: 100%;">Обрати дату</button>
             </div>
 
-            <div class="booking-form-element">
-                <label for="al12">Альтанка на 12чол.</label>
-                <input class="booking-radio" type="radio" name="rad" id="al12" value="al12">
+            <div id="booking-section-2" style="display: none;">
+                <p>2. Деталі бронювання</p>
+                <input type="text" placeholder="Ваше ім'я" id="booking-name" required>
+                <input type="email" placeholder="Електронна пошта" id="booking-email" required style="margin-top: 15px;">
+                <input type="tel" placeholder="Номер телефону" id="booking-tel" required style="margin-top: 15px;">
+
+                <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 15px;">
+                    <div class="booking-form-element">
+                        <label for="al8">Альтанка на 8чол.</label>
+                        <input class="booking-radio" type="radio" name="rad" id="al8" value="al8" checked>
+                    </div>
+                    <div class="booking-form-element">
+                        <label for="al12">Альтанка на 12чол.</label>
+                        <input class="booking-radio" type="radio" name="rad" id="al12" value="al12">
+                    </div>
+                    <div class="booking-form-element">
+                        <label for="fishing-spot">Місце для рибалки</label>
+                        <input class="booking-radio" type="radio" name="rad" id="fishing-spot" value="fish_spot">
+                    </div>
+                </div>
+
+                <button type="submit" id="booking-form-btn" class="form-btn">Забронювати</button>
             </div>
 
-            <div class="booking-form-element">
-                <label for="fishing-spot">Місце для рибалки</label>
-                <input class="booking-radio" type="radio" name="rad" id="fishing-spot" value="fish_spot">
-            </div>
-
-            <button type="button" id="booking-form-btn">Забронювати</button>
         </form>
     </div>
 

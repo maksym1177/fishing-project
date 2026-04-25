@@ -317,6 +317,152 @@ height: 200px;
 .booking-form-div{
     display: none;
 }
+.booking-form-div {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 5px 5px 15px 5000px rgba(0,0,0,0.16);
+}
+
+#booking-form {
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    padding: 50px 40px;
+    gap: 35px;
+    width: 100%;
+    background-image: url(https://i.pinimg.com/736x/39/13/90/391390a475ebd3fd253ef88a4c7f5552.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.booking-form-div p,
+.booking-form-element label {
+    font-size: 22px;
+    color: #fff;
+    margin: 0;
+}
+
+#date-selects {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 5px;
+}
+
+#date-selects select {
+    color: white;
+    background-color: var(--dark-green, #2d5a27);
+    border-radius: 6px;
+    font-size: 18px;
+    padding: 12px 15px;
+    border: none;
+    width: 50%;
+    cursor: pointer;
+    outline: none;
+}
+
+#days-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.day-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 10px 0;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+.day-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.day-btn.selected {
+    background-color: #fff;
+    color: #000;
+    font-weight: bold;
+    border-color: #fff;
+}
+
+#booking-form-btn,
+#date-pick-btn {
+    background-color: rgba(211, 211, 211, 0.3);
+    color: #fff;
+    font-size: 22px;
+    margin-top: 15px;
+    padding: 18px 0;
+    border-radius: 15px;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+#booking-form-btn:active,
+#date-pick-btn:active {
+    background-color: rgba(211, 211, 211, 0.4);
+}
+
+#booking-form input:not(.booking-radio) {
+    background-color: rgb(182, 181, 181);
+    outline: none;
+    font-size: 22px;
+    border-radius: 6px;
+    color: black;
+    padding: 16px 18px;
+    border: none;
+    width: 100%;
+}
+
+.booking-form-element {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.booking-radio {
+    width: 25px !important;
+    height: 25px;
+    cursor: pointer;
+}
+
+#days-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+#days-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+@media (max-width: 1300px) {
+    .booking-form-div { max-width: 460px; }
+    #booking-form { padding: 45px 35px; gap: 30px; }
+    #booking-form input:not(.booking-radio),
+    #booking-form-btn, #date-pick-btn { font-size: 20px; }
+}
+
+@media (max-width: 768px) {
+    .booking-form-div { max-width: 380px; }
+    .booking-form-div p, .booking-form-element label { font-size: 20px; }
+    #booking-form input:not(.booking-radio),
+    #booking-form-btn, #date-pick-btn { font-size: 18px; padding: 14px 16px; }
+}
 /*------------------------------------------------FORM--------------*/
 
 .form-div,.booking-form-div{
@@ -328,7 +474,7 @@ height: 200px;
   border-radius: 16px;
   width: 100%;
   max-width: 520px;
-  box-shadow: 5px 5px 15px 5000px rgba(0,0,0,0.16); 
+  box-shadow: 5px 5px 15px 5000px rgba(0,0,0,0.16);
 }
 
 .form-div p, .booking-form-div p,.booking-form-element label{
@@ -340,7 +486,7 @@ height: 200px;
     display: flex;
 }
 
-#register-form, #login-form, #booking-form{
+#register-form, #login-form, #booking-form,#date-picker{
     border-radius: 16px;
     display: flex;
     flex-direction: column;
@@ -363,7 +509,7 @@ height: 200px;
     width: 100%;
 }
 
-#register-form input::placeholder, 
+#register-form input::placeholder,
 #login-form input::placeholder,
 #booking-form input::placeholder{
     color: #000;
@@ -1269,19 +1415,12 @@ h1{
 
 
 
-/* .non-admin{
-    display: none;
-    transform: rotateX(90deg);
-    width: 0;
-} */
 .admin-bookings{
     display: none;
 }
 .admin-bookings h1{
     text-align: center;
 }
-/* Початковий стан: адмінка схована */
 .admin {
     display: none;
 }
-

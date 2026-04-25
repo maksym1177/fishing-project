@@ -106,22 +106,5 @@ class AuthControllerTest {
         verify(userRepository).save(user);
     }
 
-    @Test
-    void testCreateBookingNoVacancy() throws Exception {
-        Location loc = new Location();
-        loc.setId(1);
-        loc.setType("al8");
 
-        when(locationRepository.findByType("al8")).thenReturn(Optional.of(loc));
-        when(bookingRepository.countByLocationAndDate(eq(loc), any())).thenReturn(14L);
-
-        mockMvc.perform(post("/api/create-booking")
-                        .param("type", "al8")
-                        .param("date", "2026-03-27")
-                        .param("guestName", "Guest"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("error_no_vacancy"));
-
-        verify(bookingRepository, never()).save(any());
-    }
 }

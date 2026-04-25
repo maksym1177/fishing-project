@@ -280,9 +280,9 @@ if (registerForm) {
 document.getElementById('booking-form-btn').addEventListener('click', async function (e) {
     e.preventDefault();
 
-
     const selectedType = document.querySelector('input[name="rad"]:checked');
-    const dateInput = document.getElementById('booking-date');
+    // Отримуємо значення з прихованого поля, куди записується дата з кнопок-днів
+    const dateInput = document.getElementById('selected-date');
 
     if (!selectedType) {
         alert("Будь ласка, оберіть тип послуги!");
@@ -293,7 +293,6 @@ document.getElementById('booking-form-btn').addEventListener('click', async func
         return;
     }
 
-
     const params = new URLSearchParams();
     params.append('type', selectedType.value);
     params.append('date', dateInput.value);
@@ -301,7 +300,6 @@ document.getElementById('booking-form-btn').addEventListener('click', async func
     params.append('guestName', document.getElementById('booking-name').value);
     params.append('guestEmail', document.getElementById('booking-email').value);
     params.append('guestPhone', document.getElementById('booking-tel').value);
-
 
     try {
         const response = await fetch('/api/create-booking', {
@@ -611,7 +609,7 @@ const toggleDisplay = (element, show = true) => {
 };
 
 
-const setupTrigger = (btn, target,oppos = 0) => {
+const setupTrigger = (btn, target) => {
     if (btn && target) {
         btn.onclick = (e) => {
             e.stopPropagation();
@@ -621,8 +619,8 @@ const setupTrigger = (btn, target,oppos = 0) => {
     }
 };
 
-setupTrigger(pLogin, formDiv,bookingsDiv);
-setupTrigger(bookingsBtn, bookingsDiv,formDiv);
+setupTrigger(pLogin, formDiv);
+setupTrigger(bookingsBtn, bookingsDiv);
 setupTrigger(profileBtn, profileDiv);
 bookBtns.forEach((btn, id) => {
     btn.addEventListener('click', (e) => {
@@ -685,3 +683,95 @@ loginForm.addEventListener('submit', async (e) => {
     }
 });
 
+
+
+
+const monthSelect = document.getElementById('month-select');
+const yearSelect = document.getElementById('year-select');
+const daysContainer = document.getElementById('days-container');
+const dateInput = document.getElementById('selected-date');
+const datePickBtn = document.getElementById("date-pick-btn");
+const bookSec1 = document.getElementById("booking-section-1");
+const bookSec2 = document.getElementById("booking-section-2");
+
+const months = [
+    "Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень",
+    "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"
+];
+
+months.forEach((month, index) => {
+    let opt = document.createElement('option');
+    opt.value = index;
+    opt.textContent = month;
+    monthSelect.appendChild(opt);
+});
+
+const currentYear = new Date().getFullYear();
+for (let i = currentYear + 5; i >= currentYear; i--) {
+    let opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = i;
+    if (i === currentYear) opt.selected = true;
+    yearSelect.appendChild(opt);
+}
+
+function updateDays() {
+    daysContainer.innerHTML = '';
+    const month = parseInt(monthSelect.value);
+    const year = parseInt(yearSelect.value);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    for (let d = 1; d <= daysInMonth; d++) {
+        const btn = document.createElement('button');
+        btn.type = "button";
+        btn.textContent = d;
+        btn.className = "day-btn";
+
+        const dateToCheck = new Date(year, month, d);
+
+        if (dateToCheck < today) {
+            btn.disabled = true;
+            btn.style.opacity = "0.3";
+            btn.style.cursor = "not-allowed";
+        } else {
+            btn.onclick = () => {
+                document.querySelectorAll('#days-container button').forEach(b => {
+                    b.classList.remove('selected');
+                    b.style.backgroundColor = "";
+                });
+                btn.classList.add('selected');
+                btn.style.backgroundColor = "#459823";
+                dateInput.value = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+            };
+        }
+
+        daysContainer.appendChild(btn);
+    }
+}
+
+monthSelect.onchange = updateDays;
+yearSelect.onchange = updateDays;
+updateDays();
+
+datePickBtn.addEventListener('click', (e) => {
+    if (!dateInput.value) {
+        alert("Будь ласка, оберіть дату!");
+        return;
+    }
+
+    const selectedDate = new Date(dateInput.value);
+    selectedDate.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (selectedDate < today) {
+        alert("Не можна обрати минулу дату!");
+        return;
+    }
+
+    bookSec1.style.display = "none";
+    bookSec2.style.display = "block";
+});
