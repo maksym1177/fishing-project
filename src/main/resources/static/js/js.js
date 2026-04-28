@@ -92,6 +92,7 @@ window.addEventListener('load', async () => {
                         });
                         if (response.ok) {
                             statusLabel.innerText = isPaid ? 'Оплачено' : 'Очікує';
+                            // Toggle classes instead of inline styles
                             if (isPaid) {
                                 statusLabel.classList.remove('status-pending');
                                 statusLabel.classList.add('status-paid');
