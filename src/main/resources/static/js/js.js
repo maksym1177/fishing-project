@@ -53,7 +53,7 @@ window.addEventListener('load', async () => {
                         default: return "Невідома послуга";
                     }
                 }
-
+//test
                 function generateMarkup(booking, canCancel) {
                     const isPaid = booking.ispaid === true;
                     const statusClass = isPaid ? 'status-paid' : 'status-pending';
@@ -86,16 +86,12 @@ window.addEventListener('load', async () => {
 
                 window.togglePayment = async function(id, isPaid) {
                     const statusLabel = document.getElementById(`pay-status-${id}`);
-                    const checkbox = document.getElementById(`check-${id}`);
-
                     try {
                         const response = await fetch(`/api/admin/bookings/toggle-pay?id=${id}&isPaid=${isPaid}`, {
                             method: 'POST'
                         });
-
                         if (response.ok) {
                             statusLabel.innerText = isPaid ? 'Оплачено' : 'Очікує';
-
                             if (isPaid) {
                                 statusLabel.classList.remove('status-pending');
                                 statusLabel.classList.add('status-paid');
@@ -104,12 +100,11 @@ window.addEventListener('load', async () => {
                                 statusLabel.classList.add('status-pending');
                             }
                         } else {
-                            alert("Помилка оновлення на сервері");
-                            checkbox.checked = !isPaid;
+                            alert("Помилка оновлення");
+                            document.getElementById(`check-${id}`).checked = !isPaid;
                         }
                     } catch (err) {
-                        console.error("Помилка запиту:", err);
-                        checkbox.checked = !isPaid;
+                        console.error(err);
                     }
                 };
 
