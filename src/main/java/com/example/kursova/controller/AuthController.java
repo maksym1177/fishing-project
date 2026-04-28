@@ -257,7 +257,22 @@ public class AuthController {
         data.put("phone", u.getPhone());
         return ResponseEntity.ok(data);
     }
+    @PostMapping("/user/update-discount")
+    public String updateDiscount(@RequestParam Integer discount, HttpSession session) {
+        String email = (String) session.getAttribute("user");
+        if (email == null) return "error_auth";
 
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            if (discount > user.getDiscount()) {
+                user.setDiscount(discount);
+                userRepository.save(user);
+                return "success_discount_updated";
+            }
+            return "no_change";
+        }
+        return "error_user_not_found";
+    }
 
 
 }

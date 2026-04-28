@@ -476,14 +476,12 @@ document.getElementById('booking-form').onsubmit = async (e) => {
 
 document.addEventListener('DOMContentLoaded', initCalendar);
 //---------------------------Bookings Load-------------------------------
-
 async function loadMyBookings() {
     const container = document.querySelector('.bookings-div');
     if (!container) return;
 
     try {
         const response = await fetch('/api/user/my-bookings');
-
         if (!response.ok) {
             if (typeof isLogined !== 'undefined' && isLogined) {
                 container.innerHTML = '<h1>Помилка завантаження</h1>';
@@ -492,7 +490,6 @@ async function loadMyBookings() {
         }
 
         const bookings = await response.json();
-
         if (!bookings || bookings.length === 0) {
             container.innerHTML = '<h1>Бронювання</h1><p style="padding:20px;">У вас ще немає бронювань.</p>';
             return;
@@ -503,6 +500,18 @@ async function loadMyBookings() {
 
         const activeBookings = bookings.filter(b => new Date(b.date) >= now);
         const pastBookings = bookings.filter(b => new Date(b.date) < now);
+
+        if (pastBookings.length > 0) {
+            let newDiscount = 5;
+            const count = pastBookings.length;
+
+            if (count >= 50) newDiscount = 15;
+            else if (count >= 30) newDiscount = 12;
+            else if (count >= 20) newDiscount = 10;
+            else if (count >= 10) newDiscount = 7;
+
+            await fetch(`/api/user/update-discount?discount=${newDiscount}`, { method: 'POST' });
+        }
 
         function getTypeName(loc) {
             if (!loc || !loc.type) return "Послуга";
@@ -531,31 +540,22 @@ async function loadMyBookings() {
         }
 
         let content = '';
-
         if (activeBookings.length > 0) {
             content += '<h1>Активні бронювання</h1>';
-            activeBookings.forEach(b => {
-                content += generateBookingMarkup(b, true);
-            });
+            activeBookings.forEach(b => content += generateBookingMarkup(b, true));
         }
-
         if (pastBookings.length > 0) {
             content += '<h1 style="margin-top:40px;">Минулі бронювання</h1>';
-            pastBookings.forEach(b => {
-                content += generateBookingMarkup(b, false);
-            });
+            pastBookings.forEach(b => content += generateBookingMarkup(b, false));
         }
-
         container.innerHTML = content;
 
     } catch (error) {
-        console.error("Помилка завантаження бронювань:", error);
+        console.error(error);
     }
 }
 
 document.addEventListener('DOMContentLoaded', loadMyBookings);
-
-
 
 //-------------------------------------Booking Canselation--------------------------------------
 async function cancelBooking(id) {
