@@ -55,27 +55,58 @@ window.addEventListener('load', async () => {
                 }
 
                 function generateMarkup(booking, canCancel) {
+                    const isPaid = booking.ispaid === true;
+                    const statusClass = isPaid ? 'status-paid' : 'status-pending';
+
                     return `
                         <div id="admin-delete-${booking.id}" class="admin-booking-div">
                             <div>
-                                <h2>Тип Бронювання</h2>
-                                <p class="admin-booking-type">${getTypeName(booking.location)}</p>
+                                <h2>№${booking.location ? booking.location.locationNumber : '?'} - ${getTypeName(booking.location)}</h2>
+                                <p>Клієнт: ${booking.guestName || 'Гість'}</p>
                             </div>
                             <div>
-                                <h2>Дата бронювання</h2>
-                                <p class="admin-booking-date">${new Date(booking.date).toLocaleDateString('uk-UA')}</p>
+                                <h2>Оплата</h2>
+                                <div class="admin-pay-wrapper">
+                                    <input type="checkbox" id="check-${booking.id}"
+                                           ${isPaid ? 'checked' : ''}
+                                           onchange="togglePayment(${booking.id}, this.checked)">
+                                    <label for="check-${booking.id}" id="pay-status-${booking.id}" class="pay-status ${statusClass}">
+                                        ${isPaid ? 'Оплачено' : 'Очікує'}
+                                    </label>
+                                </div>
                             </div>
                             <div>
-                                <h2>Email</h2>
-                                <p class="admin-booking-email">${booking.guestEmail || 'не вказано'}</p>
+                                <h2>Контакти</h2>
+                                <p>${booking.guestEmail || 'немає'}</p>
+                                <p>${booking.guestPhone || 'немає'}</p>
                             </div>
-                            <div>
-                                <h2>Номер телефону</h2>
-                                <p class="admin-booking-phone">${booking.guestPhone || 'не вказано'}</p>
-                            </div>
-                            ${canCancel ? `<button class="admin-cansel-booking" onclick="adminCancelBooking(${booking.id})">Відмінити</button>` : ''}
+                            ${canCancel ? `<button class="admin-cansel-booking" onclick="adminCancelBooking(${booking.id})">Видалити</button>` : ''}
                         </div>`;
                 }
+
+                window.togglePayment = async function(id, isPaid) {
+                    const statusLabel = document.getElementById(`pay-status-${id}`);
+                    try {
+                        const response = await fetch(`/api/admin/bookings/toggle-pay?id=${id}&isPaid=${isPaid}`, {
+                            method: 'POST'
+                        });
+                        if (response.ok) {
+                            statusLabel.innerText = isPaid ? 'Оплачено' : 'Очікує';
+                            if (isPaid) {
+                                statusLabel.classList.remove('status-pending');
+                                statusLabel.classList.add('status-paid');
+                            } else {
+                                statusLabel.classList.remove('status-paid');
+                                statusLabel.classList.add('status-pending');
+                            }
+                        } else {
+                            alert("Помилка оновлення");
+                            document.getElementById(`check-${id}`).checked = !isPaid;
+                        }
+                    } catch (err) {
+                        console.error(err);
+                    }
+                };
 
                 if (activeBookings.length > 0) {
                     container.insertAdjacentHTML('beforeend', '<h1>Активні бронювання</h1>');

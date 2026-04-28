@@ -1538,3 +1538,39 @@ h1{
 .admin {
     display: none;
 }
+
+
+.admin-pay-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.admin-pay-wrapper input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.pay-status {
+    font-size: 24px;
+    font-weight: bold;
+    user-select: none;
+    cursor: pointer;
+}
+
+.status-paid {
+    color: #459823;
+}
+
+.status-pending {
+    color: #e67e22;
+}
+
+.admin-booking-div {
+    border-bottom: 1px solid #ddd;
+    padding: 20px 0;
+    position: relative;
+    z-index: 1;
+}

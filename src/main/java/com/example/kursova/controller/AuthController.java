@@ -174,7 +174,21 @@ public class AuthController {
             }
             return ResponseEntity.status(403).body("Доступ заборонено");
         }
+        @PostMapping("/bookings/toggle-pay")
+        public ResponseEntity<?> togglePaymentStatus(@RequestParam Integer id, @RequestParam Boolean isPaid, HttpSession session) {
+            if (!Boolean.TRUE.equals(session.getAttribute("isAdmin"))) {
+                return ResponseEntity.status(403).build();
+            }
 
+            Optional<Booking> bookingOpt = bookingRepository.findById(id);
+            if (bookingOpt.isPresent()) {
+                Booking booking = bookingOpt.get();
+                booking.setIspaid(isPaid);
+                bookingRepository.save(booking);
+                return ResponseEntity.ok("success");
+            }
+            return ResponseEntity.status(404).body("Booking not found");
+        }
         @PostMapping("/add-location")
         public String addLocation(@RequestParam String type,
                                   @RequestParam Integer capacity,
