@@ -91,7 +91,7 @@ window.addEventListener('load', async () => {
                             method: 'POST'
                         });
                         if (response.ok) {
-                            statusLabel.innerText = isPaid ? 'Оплачено' : 'Очікує';
+                            statusLabel.innerText = isPaid ? 'Оплачено' : 'Очікує';git
                             if (isPaid) {
                                 statusLabel.classList.remove('status-pending');
                                 statusLabel.classList.add('status-paid');
