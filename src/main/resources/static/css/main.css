@@ -355,7 +355,9 @@ height: 200px;
     margin-bottom: 5px;
 }
 
-#date-selects select {
+#date-selects select ,
+#category-select select
+{
     color: white;
     background-color: var(--dark-green, #2d5a27);
     border-radius: 6px;
@@ -940,6 +942,118 @@ height: 200px;
     font-size: 20px;
     padding: 12px;
 }
+}
+
+
+#category-select{
+    padding:15px;
+    background: var(--dark-green);
+    color:white;
+    font-size: 18px;
+    width: 50%;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 12px 15px;
+    margin:auto;
+}
+
+#location-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 480px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+    background: #fcfcfc;
+    border-radius: 12px;
+}
+#location-list button{
+    width:100%;
+}
+#location-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+#location-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+#location-list::-webkit-scrollbar-thumb {
+    background: #459823;
+    border-radius: 10px;
+}
+
+.location-card {
+    display: flex;
+    align-items:center;
+    flex-shrink: 0;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 12px;
+    gap: 16px;
+    min-height: 120px;
+    border: 1px solid rgba(0, 0, 0, 0.05); /* Ледь помітна лінія */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* М'яка тінь */
+    transition: all 0.2s ease-in-out;
+}
+
+.location-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-color: #459823;
+}
+
+.location-card img {
+    width: 140px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+/* Інфо-блок */
+.loc-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.loc-info h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #2d2d2d;
+    font-weight: 700;
+}
+
+.loc-info p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.select-loc-btn {
+    align-self: flex-start;
+    padding: 8px 20px;
+    background: #459823;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.select-loc-btn:hover {
+    background: #367a1c;
+}
+
+.select-loc-btn.selected {
+    background: #2d2d2d;
 }
 
 /* ===================== 1024 px===================== */

@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -97,69 +98,6 @@ public class AuthController {
     }
 
 
-    @PostMapping("/create-booking")
-    @ResponseBody
-    public String createBooking(@RequestParam String type,
-                                @RequestParam String date,
-                                @RequestParam(required = false) String guestName,
-                                @RequestParam(required = false) String guestEmail,
-                                @RequestParam(required = false) String guestPhone,
-                                HttpSession session) {
-        try {
-            if (type == null || type.isEmpty()) return "error_location_not_found";
-
-            List<Location> locations = locationRepository.findByType(type.trim());
-            if (locations.isEmpty()) return "error_location_not_found";
-
-            Location targetLocation = locations.get(0);
-
-            LocalDate bookingDate;
-            try {
-                bookingDate = LocalDate.parse(date);
-            } catch (Exception e) {
-                return "error_date_format";
-            }
-
-            if (bookingDate.isBefore(LocalDate.now())) {
-                return "error_past_date";
-            }
-
-            long alreadyBooked = bookingRepository.countByLocationTypeAndDate(type.trim(), bookingDate);
-
-            if (alreadyBooked >= 14) return "error_no_vacancy";
-
-            Booking booking = new Booking();
-            booking.setLocation(targetLocation);
-            booking.setDate(bookingDate);
-            booking.setPrice(0);
-            booking.setIspaid(false);
-
-            String userEmail = (String) session.getAttribute("user");
-            if (userEmail != null) {
-                User user = userRepository.findByEmail(userEmail);
-                if (user != null) {
-                    booking.setUser(user);
-                    booking.setGuestName(user.getUsername());
-                    booking.setGuestEmail(user.getEmail());
-                    booking.setGuestPhone(user.getPhone());
-                }
-            } else {
-                if (guestName == null || guestName.isEmpty()) return "error_missing_info";
-                booking.setGuestName(guestName);
-                booking.setGuestEmail(guestEmail);
-                booking.setGuestPhone(guestPhone);
-            }
-
-            bookingRepository.save(booking);
-            return "success_booking";
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "error_internal_server";
-        }
-    }
-
-
 
     @GetMapping("/check-auth")
     public Map<String, Object> checkAuth(HttpSession session) {
@@ -175,7 +113,6 @@ public class AuthController {
         }
         return response;
     }
-
 
     @GetMapping("/logout")
     public ModelAndView logout(HttpSession session) {
@@ -270,7 +207,56 @@ public class AuthController {
                     .orElse(false);
         }
     }
+    @GetMapping("/locations/by-type")
+    public List<Location> getLocationsByType(@RequestParam String type, @RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        return locationRepository.findByType(type).stream()
+                .filter(loc -> !bookingRepository.existsByLocationAndDate(loc, localDate))
+                .collect(Collectors.toList());
+    }
 
+    @PostMapping("/create-booking")
+    public String createBooking(@RequestParam Integer locationId, @RequestParam String date,
+                                @RequestParam(required = false) String guestName,
+                                @RequestParam(required = false) String guestEmail,
+                                @RequestParam(required = false) String guestPhone, HttpSession session) {
+        Location loc = locationRepository.findById(locationId).orElse(null);
+        LocalDate d = LocalDate.parse(date);
+        if (loc == null || d.isBefore(LocalDate.now()) || bookingRepository.existsByLocationAndDate(loc, d))
+            return "error";
+
+        Booking b = new Booking();
+        b.setLocation(loc);
+        b.setDate(d);
+        b.setIspaid(false);
+
+        String email = (String) session.getAttribute("user");
+        if (email != null) {
+            User u = userRepository.findByEmail(email);
+            b.setUser(u);
+            b.setGuestName(u.getUsername());
+            b.setGuestEmail(u.getEmail());
+            b.setGuestPhone(u.getPhone());
+        } else {
+            b.setGuestName(guestName);
+            b.setGuestEmail(guestEmail);
+            b.setGuestPhone(guestPhone);
+        }
+        bookingRepository.save(b);
+        return "success_booking";
+    }
+
+    @GetMapping("/user/details")
+    public ResponseEntity<?> getUserDetails(HttpSession session) {
+        String email = (String) session.getAttribute("user");
+        if (email == null) return ResponseEntity.status(401).build();
+        User u = userRepository.findByEmail(email);
+        Map<String, String> data = new HashMap<>();
+        data.put("name", u.getUsername());
+        data.put("email", u.getEmail());
+        data.put("phone", u.getPhone());
+        return ResponseEntity.ok(data);
+    }
 
 
 

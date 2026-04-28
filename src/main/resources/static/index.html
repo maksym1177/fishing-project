@@ -236,7 +236,7 @@
                 <div class="altankas">
                     <img src="photos/al8.png" alt="">
                     <div>
-                        <h2>Альтанка на 8 місць</h2>
+                        <h2>Альтанка 8 місць</h2>
                         <p>600грн/доба</p>
                         <button class="book-btn">Забронювати</button>
                     </div>
@@ -244,7 +244,7 @@
                 <div class="altankas">
                     <img src="photos/al12.png" alt="">
                     <div>
-                        <h2>Альтанка на 12 місць</h2>
+                        <h2>Альтанка 12 місць</h2>
                         <p>1000грн/доба</p>
                         <button class="book-btn">Забронювати</button>
                     </div>
@@ -657,44 +657,47 @@
     </main>
     <div class="booking-form-div">
         <form id="booking-form">
-
             <div id="booking-section-1">
                 <p>1. Оберіть дату</p>
                 <div id="date-selects">
                     <select id="month-select" class="custom-select"></select>
                     <select id="year-select" class="custom-select"></select>
                 </div>
-
                 <div id="days-container"></div>
                 <input type="hidden" id="selected-date" name="date">
-
-                <button type="button" id="date-pick-btn" class="form-btn" style="width: 100%;">Обрати дату</button>
+                <button type="button" id="to-step-2-btn" class="form-btn" style="width: 100%;">Далі</button>
             </div>
 
             <div id="booking-section-2" style="display: none;">
-                <p>2. Деталі бронювання</p>
+                <p>2. Оберіть конкретну альтанку чи місце</p>
+
+                <select id="category-select" class="custom-select" style="width: 100%; margin-bottom: 20px;">
+                    <option selected value="al8">Альтанка на 8 місць</option>
+                    <option value="al12">Альтанка на 12 місць</option>
+                    <option value="fish_spot">Місце для рибалки</option>
+                </select>
+
+                <div id="location-list" class="location-cards-container"></div>
+
+                <input type="hidden" id="selected-location-id">
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" id="back-to-1" class="form-btn" style="background-color: #6c757d;">Назад</button>
+                    <button type="button" id="to-step-3-btn" class="form-btn" style="display: none;">Далі</button>
+                </div>
+            </div>
+
+            <div id="booking-section-3" class="hidden-step">
+                <p>3. Контактні дані</p>
                 <input type="text" placeholder="Ваше ім'я" id="booking-name" required>
                 <input type="email" placeholder="Електронна пошта" id="booking-email" required style="margin-top: 15px;">
                 <input type="tel" placeholder="Номер телефону" id="booking-tel" required style="margin-top: 15px;">
 
-                <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 15px;">
-                    <div class="booking-form-element">
-                        <label for="al8">Альтанка на 8 місць</label>
-                        <input class="booking-radio" type="radio" name="rad" id="al8" value="al8" checked>
-                    </div>
-                    <div class="booking-form-element">
-                        <label for="al12">Альтанка на 12 місць</label>
-                        <input class="booking-radio" type="radio" name="rad" id="al12" value="al12">
-                    </div>
-                    <div class="booking-form-element">
-                        <label for="fishing-spot">Місце для рибалки</label>
-                        <input class="booking-radio" type="radio" name="rad" id="fishing-spot" value="fish_spot">
-                    </div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" id="back-to-2" class="form-btn" style="background-color: #6c757d;">Назад</button>
+                    <button type="submit" id="booking-form-btn" class="form-btn">Забронювати</button>
                 </div>
-
-                <button type="submit" id="booking-form-btn" class="form-btn">Забронювати</button>
             </div>
-
         </form>
     </div>
 
@@ -829,7 +832,7 @@
         </div>
         <span id="abs-span">© Calm Waters  <br>All Rights Reserved</span>
     </footer>
-    
+
 
     <script src="js/js.js"></script>
 </body>

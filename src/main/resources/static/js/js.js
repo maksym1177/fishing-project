@@ -277,55 +277,204 @@ if (registerForm) {
 }
 
 //------------------------------BOOKING------------------------------------
-document.getElementById('booking-form-btn').addEventListener('click', async function (e) {
+const monthSelect = document.getElementById('month-select');
+const yearSelect = document.getElementById('year-select');
+const daysContainer = document.getElementById('days-container');
+const dateInput = document.getElementById('selected-date');
+const bSec1 = document.getElementById("booking-section-1");
+const bSec2 = document.getElementById("booking-section-2");
+const bSec3 = document.getElementById("booking-section-3");
+const categorySelect = document.getElementById("category-select");
+const locationList = document.getElementById("location-list");
+const toStep3Btn = document.getElementById("to-step-3-btn");
+const selectedIdInput = document.getElementById("selected-location-id");
+
+const months = ["Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"];
+const CATEGORY_PRIORITY = ["al8", "al12", "fish_spot"];
+
+async function initCalendar() {
+    if (!monthSelect || !yearSelect) return;
+    months.forEach((month, index) => {
+        let opt = document.createElement('option');
+        opt.value = index;
+        opt.textContent = month;
+        monthSelect.appendChild(opt);
+    });
+    const currentYear = new Date().getFullYear();
+    for (let i = currentYear; i <= currentYear + 1; i++) {
+        let opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = i;
+        yearSelect.appendChild(opt);
+    }
+    const now = new Date();
+    monthSelect.value = now.getMonth();
+    yearSelect.value = now.getFullYear();
+    monthSelect.onchange = updateDays;
+    yearSelect.onchange = updateDays;
+    await updateDays();
+}
+
+async function checkFullAvailability(dateStr) {
+    try {
+        for (const type of CATEGORY_PRIORITY) {
+            const res = await fetch(`/api/locations/by-type?type=${type}&date=${dateStr}`);
+            const locations = await res.json();
+            if (locations.length > 0) return false;
+        }
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+async function updateDays() {
+    daysContainer.innerHTML = '';
+    const month = parseInt(monthSelect.value);
+    const year = parseInt(yearSelect.value);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    for (let d = 1; d <= daysInMonth; d++) {
+        const btn = document.createElement('button');
+        btn.type = "button";
+        btn.textContent = d;
+        btn.className = "day-btn";
+        const dateToCheck = new Date(year, month, d);
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
+        if (dateToCheck < today) {
+            btn.disabled = true;
+            btn.style.opacity = "0.3";
+        } else {
+            const isFull = await checkFullAvailability(dateStr);
+            if (isFull) {
+                btn.disabled = true;
+                btn.style.opacity = "0.3";
+                btn.style.cursor = "not-allowed";
+            } else {
+                btn.onclick = () => {
+                    document.querySelectorAll('.day-btn').forEach(b => {
+                        b.classList.remove('selected');
+                        b.style.backgroundColor = "";
+                    });
+                    btn.classList.add('selected');
+                    btn.style.backgroundColor = "#459823";
+                    dateInput.value = dateStr;
+                };
+            }
+        }
+        daysContainer.appendChild(btn);
+    }
+}
+
+async function loadLocations(type) {
+    if (!dateInput.value) return;
+    locationList.innerHTML = "<p>Пошук вільних місць...</p>";
+    toStep3Btn.style.display = "none";
+
+    let startIndex = CATEGORY_PRIORITY.indexOf(type);
+    if (startIndex === -1) startIndex = 0;
+
+    for (let i = startIndex; i < CATEGORY_PRIORITY.length; i++) {
+        const currentType = CATEGORY_PRIORITY[i];
+        try {
+            const response = await fetch(`/api/locations/by-type?type=${currentType}&date=${dateInput.value}`);
+            const locations = await response.json();
+            if (locations.length > 0) {
+                categorySelect.value = currentType;
+                renderLocations(locations);
+                return;
+            }
+        } catch (err) { console.error(err); }
+    }
+    locationList.innerHTML = "<p style='color:red;'>На жаль, на цю дату все заброньовано.</p>";
+}
+
+function renderLocations(locations) {
+    locationList.innerHTML = "";
+    locations.forEach(loc => {
+        const card = document.createElement("div");
+        card.className = "location-card";
+        card.innerHTML = `
+            <img src="${loc.imageUrl || 'photos/al8.png'}">
+            <div class="loc-info">
+                <h3>№${loc.locationNumber}</h3>
+                <p>Місткість: ${loc.capacity}</p>
+                <p><b>${loc.pricePerDay} грн</b></p>
+                <button type="button" class="select-loc-btn" onclick="selectLocation(${loc.id}, this)">Обрати</button>
+            </div>`;
+        locationList.appendChild(card);
+    });
+}
+
+window.selectLocation = function(id, btn) {
+    document.querySelectorAll('.select-loc-btn').forEach(b => {
+        b.innerText = "Обрати";
+        b.style.backgroundColor = "";
+    });
+    selectedIdInput.value = id;
+    btn.innerText = "ОБРАНО";
+    btn.style.backgroundColor = "#459823";
+    toStep3Btn.style.display = "block";
+};
+
+document.getElementById("to-step-2-btn").onclick = () => {
+    if (!dateInput.value) return alert("Будь ласка, оберіть дату!");
+    bSec1.style.display = "none";
+    bSec2.style.display = "block";
+    loadLocations("al8");
+};
+
+document.getElementById("back-to-1").onclick = () => {
+    bSec2.style.display = "none";
+    bSec1.style.display = "block";
+};
+
+document.getElementById("to-step-3-btn").onclick = async () => {
+    bSec2.style.display = "none";
+    bSec3.style.display = "block";
+    try {
+        const res = await fetch('/api/user/details');
+        if (res.ok) {
+            const user = await res.json();
+            document.getElementById('booking-name').value = user.name || "";
+            document.getElementById('booking-email').value = user.email || "";
+            document.getElementById('booking-tel').value = user.phone || "";
+        }
+    } catch (e) {}
+};
+
+document.getElementById("back-to-2").onclick = () => {
+    bSec3.style.display = "none";
+    bSec2.style.display = "block";
+};
+
+categorySelect.onchange = () => loadLocations(categorySelect.value);
+
+document.getElementById('booking-form').onsubmit = async (e) => {
     e.preventDefault();
-
-    const selectedType = document.querySelector('input[name="rad"]:checked');
-    // Отримуємо значення з прихованого поля, куди записується дата з кнопок-днів
-    const dateInput = document.getElementById('selected-date');
-
-    if (!selectedType) {
-        alert("Будь ласка, оберіть тип послуги!");
-        return;
-    }
-    if (!dateInput.value) {
-        alert("Будь ласка, оберіть дату!");
-        return;
-    }
-
     const params = new URLSearchParams();
-    params.append('type', selectedType.value);
+    params.append('locationId', selectedIdInput.value);
     params.append('date', dateInput.value);
-
     params.append('guestName', document.getElementById('booking-name').value);
     params.append('guestEmail', document.getElementById('booking-email').value);
     params.append('guestPhone', document.getElementById('booking-tel').value);
 
     try {
-        const response = await fetch('/api/create-booking', {
-            method: 'POST',
-            body: params
-        });
-
-        const result = await response.text();
-
-        if (result === "success_booking") {
-            alert("Успішно заброньовано! Чекаємо на вас.");
+        const res = await fetch('/api/create-booking', { method: 'POST', body: params });
+        const txt = await res.text();
+        if (txt === "success_booking") {
+            alert("Успішно заброньовано!");
             location.reload();
-        } else if (result === "error_no_vacancy") {
-            alert("На жаль, на цю дату всі альтанки цього типу вже зайняті.");
-        } else if (result === "error_auth") {
-            alert("Будь ласка, спочатку увійдіть в акаунт.");
         } else {
-            alert("Помилка: " + result);
+            alert("Помилка: " + txt);
         }
-    } catch (error) {
-        console.error("Помилка мережі:", error);
-        alert("Не вдалося з'єднатися з сервером.");
-    }
-});
+    } catch (err) { console.error(err); }
+};
 
-
+document.addEventListener('DOMContentLoaded', initCalendar);
 //---------------------------Bookings Load-------------------------------
 
 async function loadMyBookings() {
@@ -581,19 +730,20 @@ regEye.addEventListener("click", () => {
     }
 });
 const bookBtns = document.querySelectorAll('.book-btn');
-bookBtns.forEach((btn)=>{
-btn.addEventListener('click', async (e) => {
-        e.preventDefault();
+bookBtns.forEach((btn, id) => {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleDisplay(document.querySelector('.booking-form-div'), true);
 
-        const response = await fetch('/api/user/get-profile');
-        if (response.ok) {
-            const user = await response.json();
+        const mainSelect = document.getElementById("location-type-select");
+        if (id === 0) mainSelect.value = "al8";
+        else if (id === 1) mainSelect.value = "al12";
+        else if (id === 2) mainSelect.value = "fish_spot";
 
-            document.getElementById('booking-name').value = user.username || "";
-            document.getElementById('booking-email').value = user.email || "";
-            document.getElementById('booking-tel').value = user.phone || "";
-        }
-    })
+        bSec1.style.display = "block";
+        bSec2.style.display = "none";
+        bSec3.style.display = "none";
+    });
 });
 
 /*----------------------------------profile menu --------------*/
@@ -683,95 +833,3 @@ loginForm.addEventListener('submit', async (e) => {
     }
 });
 
-
-
-
-const monthSelect = document.getElementById('month-select');
-const yearSelect = document.getElementById('year-select');
-const daysContainer = document.getElementById('days-container');
-const dateInput = document.getElementById('selected-date');
-const datePickBtn = document.getElementById("date-pick-btn");
-const bookSec1 = document.getElementById("booking-section-1");
-const bookSec2 = document.getElementById("booking-section-2");
-
-const months = [
-    "Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень",
-    "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"
-];
-
-months.forEach((month, index) => {
-    let opt = document.createElement('option');
-    opt.value = index;
-    opt.textContent = month;
-    monthSelect.appendChild(opt);
-});
-
-const currentYear = new Date().getFullYear();
-for (let i = currentYear + 5; i >= currentYear; i--) {
-    let opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = i;
-    if (i === currentYear) opt.selected = true;
-    yearSelect.appendChild(opt);
-}
-
-function updateDays() {
-    daysContainer.innerHTML = '';
-    const month = parseInt(monthSelect.value);
-    const year = parseInt(yearSelect.value);
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    for (let d = 1; d <= daysInMonth; d++) {
-        const btn = document.createElement('button');
-        btn.type = "button";
-        btn.textContent = d;
-        btn.className = "day-btn";
-
-        const dateToCheck = new Date(year, month, d);
-
-        if (dateToCheck < today) {
-            btn.disabled = true;
-            btn.style.opacity = "0.3";
-            btn.style.cursor = "not-allowed";
-        } else {
-            btn.onclick = () => {
-                document.querySelectorAll('#days-container button').forEach(b => {
-                    b.classList.remove('selected');
-                    b.style.backgroundColor = "";
-                });
-                btn.classList.add('selected');
-                btn.style.backgroundColor = "#459823";
-                dateInput.value = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-            };
-        }
-
-        daysContainer.appendChild(btn);
-    }
-}
-
-monthSelect.onchange = updateDays;
-yearSelect.onchange = updateDays;
-updateDays();
-
-datePickBtn.addEventListener('click', (e) => {
-    if (!dateInput.value) {
-        alert("Будь ласка, оберіть дату!");
-        return;
-    }
-
-    const selectedDate = new Date(dateInput.value);
-    selectedDate.setHours(0, 0, 0, 0);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    if (selectedDate < today) {
-        alert("Не можна обрати минулу дату!");
-        return;
-    }
-
-    bookSec1.style.display = "none";
-    bookSec2.style.display = "block";
-});

@@ -31,7 +31,7 @@ public class User implements Serializable {
     private int discount = 0;
 
 
-
+    public String getName() { return username; }
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
     public int getDiscount() { return discount; }

@@ -17,6 +17,7 @@ import java.util.List;
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
     List<Booking> findByUser(User user);
 
+    boolean existsByLocationAndDate(Location location, LocalDate date);
     @Query("SELECT COUNT(b) FROM Booking b WHERE b.location.type = :type AND b.date = :date")
     long countByLocationTypeAndDate(@Param("type") String type, @Param("date") LocalDate date);
 
