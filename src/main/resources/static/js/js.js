@@ -14,139 +14,157 @@ window.addEventListener('load', async () => {
         const response = await fetch('/api/check-auth');
         if (!response.ok) return;
         const data = await response.json();
-        isAdmin = data.isAdmin;
-        if (isAdmin){
-        document.querySelectorAll(".non-admin").forEach((na) => {
-            na.style.display = "none";
-        });
-        document.getElementsByClassName("admin-bookings")[0].style.display = "block";
 
-        loadAdminBookings();
+        const isAdmin = data.isAdmin;
+        const isLogined = data.authenticated;
 
-        async function loadAdminBookings() {
-            try {
-                const response = await fetch('/api/admin/bookings/active');
-                if (!response.ok) return;
-                adminLinks.forEach((el,id) => {
-                    el.style.display = "block";
-                    if (id == 0){el.style.color = "var(--dark-green)"}
-                });
-                const bookings = await response.json();
-                const container = document.querySelector('.admin-bookings');
-
-                const title = container.querySelector('h1');
-                container.innerHTML = '';
-                if (title) container.appendChild(title);
-
-                const now = new Date();
-                now.setHours(0, 0, 0, 0);
-
-                const activeBookings = bookings.filter(b => new Date(b.date) >= now);
-                const pastBookings = bookings.filter(b => new Date(b.date) < now);
-
-                function getTypeName(loc) {
-                    if (!loc || !loc.type) return "Послуга";
-                    switch(loc.type) {
-                        case "al8": return "Альтанка на 8чол";
-                        case "al12": return "Альтанка на 12чол";
-                        case "fish_spot": return "Місце для рибалки";
-                        default: return "Невідома послуга";
-                    }
-                }
-//test
-                function generateMarkup(booking, canCancel) {
-                    const isPaid = booking.ispaid === true;
-                    const statusClass = isPaid ? 'status-paid' : 'status-pending';
-
-                    return `
-                        <div id="admin-delete-${booking.id}" class="admin-booking-div">
-                            <div>
-                                <h2>№${booking.location ? booking.location.locationNumber : '?'} - ${getTypeName(booking.location)}</h2>
-                                <p>Клієнт: ${booking.guestName || 'Гість'}</p>
-                            </div>
-                            <div>
-                                <h2>Оплата</h2>
-                                <div class="admin-pay-wrapper">
-                                    <input type="checkbox" id="check-${booking.id}"
-                                           ${isPaid ? 'checked' : ''}
-                                           onchange="togglePayment(${booking.id}, this.checked)">
-                                    <label for="check-${booking.id}" id="pay-status-${booking.id}" class="pay-status ${statusClass}">
-                                        ${isPaid ? 'Оплачено' : 'Очікує'}
-                                    </label>
-                                </div>
-                            </div>
-                            <div>
-                                <h2>Контакти</h2>
-                                <p>${booking.guestEmail || 'немає'}</p>
-                                <p>${booking.guestPhone || 'немає'}</p>
-                            </div>
-                            ${canCancel ? `<button class="admin-cansel-booking" onclick="adminCancelBooking(${booking.id})">Видалити</button>` : ''}
-                        </div>`;
-                }
-
-                window.togglePayment = async function(id, isPaid) {
-                    const statusLabel = document.getElementById(`pay-status-${id}`);
-                    try {
-                        const response = await fetch(`/api/admin/bookings/toggle-pay?id=${id}&isPaid=${isPaid}`, {
-                            method: 'POST'
-                        });
-                        if (response.ok) {
-                            statusLabel.innerText = isPaid ? 'Оплачено' : 'Очікує';
-                            if (isPaid) {
-                                statusLabel.classList.remove('status-pending');
-                                statusLabel.classList.add('status-paid');
-                            } else {
-                                statusLabel.classList.remove('status-paid');
-                                statusLabel.classList.add('status-pending');
-                            }
-                        } else {
-                            alert("Помилка оновлення");
-                            document.getElementById(`check-${id}`).checked = !isPaid;
-                        }
-                    } catch (err) {
-                        console.error(err);
-                    }
-                };
-
-                if (activeBookings.length > 0) {
-                    container.insertAdjacentHTML('beforeend', '<h1>Активні бронювання</h1>');
-                    activeBookings.forEach(b => {
-                        container.insertAdjacentHTML('beforeend', generateMarkup(b, true));
-                    });
-                }
-
-                if (pastBookings.length > 0) {
-                    container.insertAdjacentHTML('beforeend', '<h1 style="margin-top:40px;">Минулі бронювання</h1>');
-                    pastBookings.forEach(b => {
-                        container.insertAdjacentHTML('beforeend', generateMarkup(b, false));
-                    });
-                }
-
-            } catch (err) {
-                console.error("Помилка:", err);
-            }
-        }
-
-        }
-        if (data.authenticated) {
-            if (loginBtn) loginBtn.style.display = "none";
-            if (logoutBtn) logoutBtn.style.display = "inline";
-            if (bookingsBtn) bookingsBtn.style.display = "inline";
-            isLogined = true;
-            if (profileBtn) {
+        if (isLogined) {
+            if (typeof loginBtn !== 'undefined') loginBtn.style.display = "none";
+            if (typeof logoutBtn !== 'undefined') logoutBtn.style.display = "inline";
+            if (typeof bookingsBtn !== 'undefined') bookingsBtn.style.display = "inline";
+            if (typeof profileBtn !== 'undefined') {
                 profileBtn.style.display = "inline";
                 profileBtn.innerText = "Профіль (" + data.name + ")";
             }
-            if (formDiv) formDiv.style.display = 'none';
+            if (typeof formDiv !== 'undefined') formDiv.style.display = 'none';
         } else {
-            isLogined = false;
-            if (loginBtn) loginBtn.style.display = "inline";
-            if (logoutBtn) logoutBtn.style.display = "none";
-            if (bookingsBtn) bookingsBtn.style.display = "none";
-            if (profileBtn) profileBtn.style.display = "none";
+            if (typeof loginBtn !== 'undefined') loginBtn.style.display = "inline";
+            if (typeof logoutBtn !== 'undefined') logoutBtn.style.display = "none";
+            if (typeof bookingsBtn !== 'undefined') bookingsBtn.style.display = "none";
+            if (typeof profileBtn !== 'undefined') profileBtn.style.display = "none";
+        }
+
+        if (isAdmin) {
+            document.querySelectorAll(".non-admin").forEach((na) => {
+                na.style.display = "none";
+            });
+            const adminContainer = document.querySelector(".admin-bookings");
+            if (adminContainer) adminContainer.style.display = "block";
+
+            await loadAdminBookings();
         }
     } catch (error) {
         console.error("Помилка перевірки сесії:", error);
+    }
+
+    async function loadAdminBookings() {
+        try {
+            const response = await fetch('/api/admin/bookings/active');
+            if (!response.ok) return;
+
+            if (typeof adminLinks !== 'undefined') {
+                adminLinks.forEach((el, id) => {
+                    el.style.display = "block";
+                    if (id == 0) { el.style.color = "var(--dark-green)" }
+                });
+            }
+
+            const bookings = await response.json();
+            const container = document.querySelector('.admin-bookings');
+            if (!container) return;
+
+            container.innerHTML = '<h1>Панель керування бронюваннями</h1>';
+
+            const now = new Date();
+            now.setHours(0, 0, 0, 0);
+
+            const parseDate = (str) => {
+                const parts = str.split('.');
+                return parts.length === 3 ? new Date(`${parts[2]}-${parts[1]}-${parts[0]}`) : new Date(str);
+            };
+
+            const activeBookings = bookings.filter(b => parseDate(b.date) >= now);
+            const pastBookings = bookings.filter(b => parseDate(b.date) < now);
+
+            function getTypeName(loc) {
+                if (!loc || !loc.type) return "Послуга";
+                switch (loc.type.trim()) {
+                    case "al8": return "Альтанка на 8чол";
+                    case "al12": return "Альтанка на 12чол";
+                    case "fish_spot": return "Місце для рибалки";
+                    default: return "Локація: " + loc.type;
+                }
+            }
+
+            function generateMarkup(booking, canCancel) {
+                const isPaid = booking.ispaid === true;
+                const statusClass = isPaid ? 'status-paid' : 'status-pending';
+
+                return `
+                    <div id="admin-delete-${booking.id}" class="admin-booking-div">
+                        <div>
+                            <h2>№${booking.location ? booking.location.locationNumber : '?'} - ${getTypeName(booking.location)}</h2>
+                            <p>Клієнт: ${booking.guestName || 'Гість'}</p>
+                            <p>Дата: ${booking.date}</p>
+                        </div>
+                        <div>
+                            <h2>Оплата</h2>
+                            <div class="admin-pay-wrapper">
+                                <input type="checkbox" id="check-${booking.id}"
+                                       ${isPaid ? 'checked' : ''}
+                                       onchange="togglePayment(${booking.id}, this.checked)">
+                                <label for="check-${booking.id}" id="pay-status-${booking.id}" class="pay-status ${statusClass}">
+                                    ${isPaid ? 'Оплачено' : 'Очікує'}
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <h2>Контакти</h2>
+                            <p>${booking.guestEmail || 'немає'}</p>
+                            <p>${booking.guestPhone || 'немає'}</p>
+                        </div>
+                        ${canCancel ? `<button class="admin-cansel-booking" onclick="adminCancelBooking(${booking.id})">Видалити</button>` : ''}
+                    </div>`;
+            }
+
+            window.togglePayment = async function(id, isPaid) {
+                const statusLabel = document.getElementById(`pay-status-${id}`);
+                try {
+                    const response = await fetch(`/api/admin/bookings/toggle-pay?id=${id}&isPaid=${isPaid}`, {
+                        method: 'POST'
+                    });
+                    if (response.ok) {
+                        statusLabel.innerText = isPaid ? 'Оплачено' : 'Очікує';
+                        statusLabel.className = `pay-status ${isPaid ? 'status-paid' : 'status-pending'}`;
+                    } else {
+                        alert("Помилка оновлення");
+                        document.getElementById(`check-${id}`).checked = !isPaid;
+                    }
+                } catch (err) {
+                    console.error(err);
+                }
+            };
+
+            let content = '';
+            if (pastBookings.length > 0) {
+                content += `
+                    <details class="bookings-accordion">
+                        <summary>Минулі бронювання (${pastBookings.length})</summary>
+                        <div class="accordion-inner-content">
+                            ${pastBookings.map(b => generateMarkup(b, false)).join('')}
+                        </div>
+                    </details>`;
+            }
+
+            if (activeBookings.length > 0) {
+                content += `
+                    <details class="bookings-accordion" open>
+                        <summary>Активні бронювання (${activeBookings.length})</summary>
+                        <div class="accordion-inner-content">
+                            ${activeBookings.map(b => generateMarkup(b, true)).join('')}
+                        </div>
+                    </details>`;
+            }
+
+            if (activeBookings.length === 0 && pastBookings.length === 0) {
+                content += '<p style="padding:20px;">Бронювань не знайдено.</p>';
+            }
+
+            container.insertAdjacentHTML('beforeend', content);
+
+        } catch (err) {
+            console.error("Помилка:", err);
+        }
     }
 });
 const adminBookings = document.getElementsByClassName("admin-bookings")[0];
@@ -529,18 +547,21 @@ async function loadMyBookings() {
         const now = new Date();
         now.setHours(0, 0, 0, 0);
 
-        const activeBookings = bookings.filter(b => new Date(b.date) >= now);
-        const pastBookings = bookings.filter(b => new Date(b.date) < now);
+        const parseDate = (str) => {
+            const parts = str.split('.');
+            return parts.length === 3 ? new Date(`${parts[2]}-${parts[1]}-${parts[0]}`) : new Date(str);
+        };
+
+        const activeBookings = bookings.filter(b => parseDate(b.date) >= now);
+        const pastBookings = bookings.filter(b => parseDate(b.date) < now);
 
         if (pastBookings.length > 0) {
             let newDiscount = 5;
             const count = pastBookings.length;
-
             if (count >= 50) newDiscount = 15;
             else if (count >= 30) newDiscount = 12;
             else if (count >= 20) newDiscount = 10;
             else if (count >= 10) newDiscount = 7;
-
             await fetch(`/api/user/update-discount?discount=${newDiscount}`, { method: 'POST' });
         }
 
@@ -570,21 +591,36 @@ async function loadMyBookings() {
             `;
         }
 
-        let content = '';
-        if (activeBookings.length > 0) {
-            content += '<h1>Активні бронювання</h1>';
-            activeBookings.forEach(b => content += generateBookingMarkup(b, true));
-        }
+        let content = '<h1>Історія бронювань</h1>';
+
         if (pastBookings.length > 0) {
-            content += '<h1 style="margin-top:40px;">Минулі бронювання</h1>';
-            pastBookings.forEach(b => content += generateBookingMarkup(b, false));
+            content += `
+                <details class="bookings-accordion">
+                    <summary>Минулі бронювання (${pastBookings.length})</summary>
+                    <div class="accordion-inner-content">
+                        ${pastBookings.map(b => generateBookingMarkup(b, false)).join('')}
+                    </div>
+                </details>`;
         }
+
+        if (activeBookings.length > 0) {
+            content += `
+                <details class="bookings-accordion" open>
+                    <summary>Активні бронювання (${activeBookings.length})</summary>
+                    <div class="accordion-inner-content">
+                        ${activeBookings.map(b => generateBookingMarkup(b, true)).join('')}
+                    </div>
+                </details>`;
+        }
+
         container.innerHTML = content;
 
     } catch (error) {
         console.error(error);
     }
 }
+
+document.addEventListener('DOMContentLoaded', loadMyBookings);
 
 document.addEventListener('DOMContentLoaded', loadMyBookings);
 

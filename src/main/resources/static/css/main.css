@@ -1571,3 +1571,41 @@ h1{
     border-bottom: 1px solid #ddd;
     padding: 20px 0;
 }
+
+.bookings-accordion {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.bookings-accordion summary {
+    padding: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #f8f9fa;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bookings-accordion summary::-webkit-details-marker {
+    display: none;
+}
+
+.bookings-accordion summary::after {
+    content: '▼';
+    font-size: 12px;
+}
+
+.bookings-accordion[open] summary::after {
+    content: '▲';
+}
+
+.accordion-content {
+    padding: 10px;
+    border-top: 1px solid #eee;
+}
+summary {
+font-size:22px;}
