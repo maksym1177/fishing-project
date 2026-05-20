@@ -1,0 +1,51 @@
+<div class="modal-overlay" (click)="modalService.closeBookings()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    
+    <div class="bookings-div non-admin">
+      <h1>Історія бронювань</h1>
+
+      <div class="tabs">
+        <button [class.active]="activeTab === 'active'" (click)="switchTab('active')">Активні</button>
+        <button [class.active]="activeTab === 'past'" (click)="switchTab('past')">Минулі</button>
+      </div>
+
+      <div class="bookings-list">
+        
+        <div *ngIf="activeTab === 'active'">
+          <div *ngIf="activeBookings.length === 0" style="padding: 20px; text-align: center;">
+            У вас немає активних бронювань.
+          </div>
+          <div class="booking-div" *ngFor="let b of activeBookings">
+            <div>
+                <h2>Тип Бронювання</h2>
+                <p class="booking type">{{ getBookingTypeName(b.location?.type) }}</p>
+                </div>
+            <div>     
+              <h2>Дата бронювання</h2>
+              <p class="booking-date">{{ b.date }}</p>
+            </div>    
+            <button class="cansel-booking" (click)="cancel(b.id)">Відмінити</button>
+          </div>
+        </div>
+
+        <div *ngIf="activeTab === 'past'">
+          <div *ngIf="pastBookings.length === 0" style="padding: 20px; text-align: center;">
+            У вас немає минулих бронювань.
+          </div>
+          <div class="booking-div" *ngFor="let b of pastBookings">
+            <div>
+              <h2>Тип Бронювання</h2>
+              <p class="booking type">{{ b.location?.type }}</p>
+            </div>
+            <div>     
+              <h2>Дата бронювання</h2>
+              <p class="booking-date">{{ b.date }}</p>
+            </div>    
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="header">
+  <a id="bhnd-logo" routerLink="/"><img class="logo" src="../assets/photos/salmon.png" alt=""></a>
+
+  <div class="mid-header">
+    <ng-container *ngIf="!(authService.isAdmin$ | async)">
+      <a class="non-admin" routerLink="/" routerLinkActive="active-nav-link" [routerLinkActiveOptions]="{exact: true}">Головна</a>
+      <a class="non-admin" routerLink="/about" routerLinkActive="active-nav-link">Про Нас</a>
+      <a class="non-admin" routerLink="/services" routerLinkActive="active-nav-link">Послуги</a>
+      <a class="non-admin" routerLink="/rules" routerLinkActive="active-nav-link">Правила</a>
+      <a class="non-admin" routerLink="/trophies" routerLinkActive="active-nav-link">Трофеї</a>
+      <a class="non-admin" routerLink="/tournaments" routerLinkActive="active-nav-link">Турніри</a>
+    </ng-container>
+    
+    <ng-container *ngIf="authService.isAdmin$ | async">
+      <a class="admin adminLink" id="adminLink1" routerLink="/admin-bookings" routerLinkActive="active-nav-link">Всі бронювання</a>
+      <a class="admin adminLink" id="adminLink2" routerLink="/admin-add-location" routerLinkActive="active-nav-link">Додати локацію</a>
+    </ng-container>
+  </div>
+
+  <div class="profile">
+    <button class="profile-btn" (click)="toggleMenu()">
+      <img src="../assets/photos/profile.png" alt="">
+    </button>
+
+    <div class="profile-menu" [class.show]="isMenuOpen">
+      <a *ngIf="!(authService.isLogined$ | async)" id="profile-login" href="#" (click)="onLoginClick($event)">Увійти</a>
+      
+      <a *ngIf="authService.isLogined$ | async" id="header-profile" href="#" (click)="onProfileClick($event)">
+        Профіль ({{ authService.userName$ | async }})
+      </a>
+      
+      <a *ngIf="authService.isLogined$ | async" id="header-bookings" href="#" (click)="onBookingsClick($event)">Мої бронювання</a>
+      
+      <a *ngIf="authService.isLogined$ | async" id="end-session-btn" href="#" (click)="onLogout($event)">Вийти</a>
+    </div>
+  </div>
+</div>

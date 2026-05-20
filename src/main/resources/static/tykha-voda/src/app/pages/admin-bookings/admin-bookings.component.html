@@ -1,0 +1,70 @@
+<div class="admin-bookings">
+    <details class="bookings-accordion" *ngIf="pastBookings.length > 0">
+    <summary>Минулі бронювання ({{pastBookings.length}})</summary>
+    <div class="accordion-inner-content">
+        <div *ngFor="let b of pastBookings" class="admin-booking-div" [id]="'admin-delete-' + b.id">
+            <div>
+                <h2>№{{b.location?.locationNumber || '?'}} - {{getTypeName(b.location)}}</h2>
+                <p>Клієнт: {{b.guestName || 'Гість'}}</p>
+                <p>Дата: {{b.date}}</p>
+            </div>
+
+            <div>
+                <h2>Оплата</h2>
+                <div class="admin-pay-wrapper">
+                    <input type="checkbox" [id]="'check-' + b.id" 
+                           [checked]="b.ispaid" 
+                           (change)="togglePayment(b, $event)">
+                    <label [for]="'check-' + b.id" [id]="'pay-status-' + b.id" 
+                           class="pay-status" 
+                           [class.status-paid]="b.ispaid" 
+                           [class.status-pending]="!b.ispaid">
+                        {{ b.ispaid ? 'Оплачено' : 'Очікує' }}
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <h2>Контакти</h2>
+                <p>{{b.guestEmail || 'немає'}}</p>
+                <p>{{b.guestPhone || 'немає'}}</p>
+            </div>
+            
+            </div>
+    </div>
+</details>
+
+  <p *ngIf="activeBookings.length === 0 && pastBookings.length === 0" style="padding:20px;">
+    Бронювань не знайдено.
+  </p>
+  <details class="bookings-accordion" open *ngIf="activeBookings.length > 0">
+    <summary>Активні бронювання ({{activeBookings.length}})</summary>
+    <div class="accordion-inner-content">
+      <div *ngFor="let b of activeBookings" class="admin-booking-div" [id]="'admin-delete-' + b.id">
+        <div>
+          <h2>№{{b.location?.locationNumber || '?'}} - {{getTypeName(b.location)}}</h2>
+          <p>Клієнт: {{b.guestName || 'Гість'}}</p>
+          <p>Дата: {{b.date}}</p>
+        </div>
+        <div>
+          <h2>Оплата</h2>
+          <div class="admin-pay-wrapper">
+            <input type="checkbox" [id]="'check-' + b.id" [checked]="b.ispaid" (change)="togglePayment(b, $event)">
+            <label [for]="'check-' + b.id" [id]="'pay-status-' + b.id" 
+                   class="pay-status" [class.status-paid]="b.ispaid" [class.status-pending]="!b.ispaid">
+              {{ b.ispaid ? 'Оплачено' : 'Очікує' }}
+            </label>
+          </div>
+        </div>
+        <div>
+          <h2>Контакти</h2>
+          <p>{{b.guestEmail || 'немає'}}</p>
+          <p>{{b.guestPhone || 'немає'}}</p>
+        </div>
+        <button class="admin-cansel-booking" (click)="cancelBooking(b.id)">Видалити</button>
+      </div>
+    </div>
+  </details>
+
+  
+</div>

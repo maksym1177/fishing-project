@@ -18,33 +18,20 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
 public class AuthController {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private BookingRepository bookingRepository;
-
-    @Autowired
-    private LocationRepository locationRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    @Autowired private UserRepository userRepository;
+    @Autowired private BookingRepository bookingRepository;
+    @Autowired private LocationRepository locationRepository;
+    @Autowired private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
-    public String register(@RequestParam String regName,
-                           @RequestParam String regEmail,
-                           @RequestParam String regPassword) {
-        if (userRepository.findByEmail(regEmail) != null) {
-            return "error_email_taken";
-        }
+    public String register(@RequestParam String regName, @RequestParam String regEmail, @RequestParam String regPassword) {
+        if (userRepository.findByEmail(regEmail) != null) return "error_email_taken";
         User user = new User();
         user.setUsername(regName);
         user.setEmail(regEmail);
@@ -55,11 +42,8 @@ public class AuthController {
         return "success_reg";
     }
 
-
     @PostMapping("/login")
-    public String login(@RequestParam String loginEmail,
-                        @RequestParam String loginPassword,
-                        HttpSession session) {
+    public String login(@RequestParam String loginEmail, @RequestParam String loginPassword, HttpSession session) {
         User user = userRepository.findByEmail(loginEmail);
         if (user != null && passwordEncoder.matches(loginPassword, user.getPassword())) {
             session.setAttribute("user", user.getEmail());
@@ -70,22 +54,16 @@ public class AuthController {
         return "fail";
     }
 
-
     @GetMapping("/user/get-profile")
     public User getProfile(HttpSession session) {
         String email = (String) session.getAttribute("user");
-        if (email == null) return null;
-        return userRepository.findByEmail(email);
+        return (email == null) ? null : userRepository.findByEmail(email);
     }
 
-
     @PostMapping("/user/update-profile")
-    public String updateProfile(@RequestParam String newName,
-                                @RequestParam String newPhone,
-                                HttpSession session) {
+    public String updateProfile(@RequestParam String newName, @RequestParam String newPhone, HttpSession session) {
         String email = (String) session.getAttribute("user");
         if (email == null) return "error_auth";
-
         User user = userRepository.findByEmail(email);
         if (user != null) {
             user.setUsername(newName);
@@ -96,8 +74,6 @@ public class AuthController {
         }
         return "error_user_not_found";
     }
-
-
 
     @GetMapping("/check-auth")
     public Map<String, Object> checkAuth(HttpSession session) {
@@ -115,112 +91,36 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
-    public ModelAndView logout(HttpSession session) {
+    public ResponseEntity<String> logout(HttpSession session) {
         session.invalidate();
-        return new ModelAndView("redirect:/index.html");
+        return ResponseEntity.ok("success");
     }
+
     @GetMapping("/user/my-bookings")
     public List<Booking> getMyBookings(HttpSession session) {
         String email = (String) session.getAttribute("user");
         if (email == null) return null;
-
         User user = userRepository.findByEmail(email);
-        if (user == null) return null;
-
-        return bookingRepository.findByUser(user);
+        return (user == null) ? null : bookingRepository.findByUser(user);
     }
+
     @Transactional
     @DeleteMapping("/bookings/cancel/{id}")
     public String cancelBooking(@PathVariable Integer id, HttpSession session) {
         String currentUserEmail = (String) session.getAttribute("user");
         Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
-
         if (currentUserEmail == null) return "error_auth";
-
         Booking booking = bookingRepository.findById(id).orElse(null);
         if (booking == null) return "error_not_found";
-
         boolean isOwner = (booking.getUser() != null && booking.getUser().getEmail().equals(currentUserEmail));
-
         if (isOwner || Boolean.TRUE.equals(isAdmin)) {
-
             bookingRepository.deleteBookingById(id);
             bookingRepository.flush();
             return "success_deleted";
         }
-
         return "error_no_permission";
     }
 
-    @RestController
-    @RequestMapping("/api/admin")
-    public class AdminController {
-
-        @Autowired
-        private BookingRepository bookingRepository;
-
-        @Autowired
-        private UserRepository userRepository;
-
-        @Autowired
-        private LocationRepository locationRepository;
-
-        @GetMapping("/bookings/active")
-        public ResponseEntity<?> getActiveBookings(HttpSession session) {
-            Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
-            if (Boolean.TRUE.equals(isAdmin)) {
-                List<Booking> allBookings = bookingRepository.findAll();
-                return ResponseEntity.ok(allBookings);
-            }
-            return ResponseEntity.status(403).body("Доступ заборонено");
-        }
-        @PostMapping("/bookings/toggle-pay")
-        public ResponseEntity<?> togglePaymentStatus(@RequestParam Integer id, @RequestParam Boolean isPaid, HttpSession session) {
-            if (!Boolean.TRUE.equals(session.getAttribute("isAdmin"))) {
-                return ResponseEntity.status(403).build();
-            }
-
-            Optional<Booking> bookingOpt = bookingRepository.findById(id);
-            if (bookingOpt.isPresent()) {
-                Booking booking = bookingOpt.get();
-                booking.setIspaid(isPaid);
-                bookingRepository.save(booking);
-                return ResponseEntity.ok("success");
-            }
-            return ResponseEntity.status(404).body("Booking not found");
-        }
-        @PostMapping("/add-location")
-        public String addLocation(@RequestParam String type,
-                                  @RequestParam Integer capacity,
-                                  @RequestParam Double pricePerDay,
-                                  @RequestParam String locationNumber,
-                                  @RequestParam(required = false) String imageUrl,
-                                  @RequestParam(required = false) String note,
-                                  HttpSession session) {
-
-            Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
-            if (!Boolean.TRUE.equals(isAdmin)) {
-                return "error_no_permission";
-            }
-
-            Location newLocation = new Location();
-            newLocation.setType(type);
-            newLocation.setCapacity(capacity);
-            newLocation.setPricePerDay(pricePerDay);
-            newLocation.setLocationNumber(locationNumber);
-            newLocation.setImageUrl(imageUrl);
-            newLocation.setNote(note);
-
-            locationRepository.save(newLocation);
-            return "success_add";
-        }
-
-        private boolean checkIfAdmin(Integer id) {
-            return userRepository.findById(id)
-                    .map(User::isAdmin)
-                    .orElse(false);
-        }
-    }
     @GetMapping("/locations/by-type")
     public List<Location> getLocationsByType(@RequestParam String type, @RequestParam String date) {
         LocalDate localDate = LocalDate.parse(date);
@@ -238,12 +138,10 @@ public class AuthController {
         LocalDate d = LocalDate.parse(date);
         if (loc == null || d.isBefore(LocalDate.now()) || bookingRepository.existsByLocationAndDate(loc, d))
             return "error";
-
         Booking b = new Booking();
         b.setLocation(loc);
         b.setDate(d);
         b.setIspaid(false);
-
         String email = (String) session.getAttribute("user");
         if (email != null) {
             User u = userRepository.findByEmail(email);
@@ -271,11 +169,11 @@ public class AuthController {
         data.put("phone", u.getPhone());
         return ResponseEntity.ok(data);
     }
+
     @PostMapping("/user/update-discount")
     public String updateDiscount(@RequestParam Integer discount, HttpSession session) {
         String email = (String) session.getAttribute("user");
         if (email == null) return "error_auth";
-
         User user = userRepository.findByEmail(email);
         if (user != null) {
             if (discount > user.getDiscount()) {
@@ -287,6 +185,4 @@ public class AuthController {
         }
         return "error_user_not_found";
     }
-
-
 }

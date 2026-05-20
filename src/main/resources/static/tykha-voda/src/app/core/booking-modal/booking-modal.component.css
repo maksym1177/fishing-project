@@ -1,0 +1,118 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modal-content {
+  background-image: url(https://i.pinimg.com/736x/39/13/90/391390a475ebd3fd253ef88a4c7f5552.jpg);
+  background-size: cover;
+  background-position: center;
+  padding: 50px 40px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 520px;
+  box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+
+#booking-section-1, 
+#booking-section-2, 
+#booking-section-3 {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  width: 100%;
+}
+
+#days-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.day-btn {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.day-btn.selected {
+  background-color: #fff;
+  color: #000;
+  font-weight: bold;
+}
+
+#date-pick-btn, 
+#to-step-3-btn,
+#back-to-1,
+#booking-section-3 button {
+  background-color: rgba(211, 211, 211, 0.3);
+  color: #fff;
+  font-size: 18px;
+  padding: 18px 0;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+#booking-section-3 input {
+  background-color: rgb(182, 181, 181);
+  outline: none;
+  font-size: 18px;
+  border-radius: 6px;
+  color: black;
+  padding: 16px 18px;
+  border: none;
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .modal-content { padding: 30px 25px; }
+  #booking-section-3 input { font-size: 14px; padding: 12px 14px; }
+}
+.day-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+.select-loc-btn {
+    align-self: flex-start;
+    padding: 8px 20px;
+    background: #459823;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.select-loc-btn:hover {
+    background: #367a1c;
+}
+
+.select-loc-btn.selected {
+    background: #2d2d2d;
+}

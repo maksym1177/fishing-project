@@ -1,0 +1,41 @@
+<div class="modal-overlay" *ngIf="(modalService.authModalStage$ | async) !== 'none'" (click)="close()">
+
+    <div class="form-div non-admin" (click)="$event.stopPropagation()">
+        
+        <form id="login-form" *ngIf="(modalService.authModalStage$ | async) === 'login'" (ngSubmit)="onLogin()">
+            <input type="email" name="loginEmail" [(ngModel)]="loginEmail" required placeholder="Eлектроннa поштa" id="login-mail">
+
+            <div class="form-element">
+                <input type="password" name="loginPassword" [(ngModel)]="loginPassword" placeholder="Пароль" required id="login-pass">
+                <button class="eye" id="login-eye" type="button">
+                    <img src="photos/eye.png" alt="">
+                </button>
+            </div>
+            
+            <a id="register-link" href="#" (click)="$event.preventDefault(); modalService.openRegister()">Зареєструватись</a>
+
+            <button id="login-btn" class="form-btn" type="submit">Увійти</button>
+        </form>
+
+        <form id="register-form" *ngIf="(modalService.authModalStage$ | async) === 'register'" (ngSubmit)="onRegister()">
+            <input type="text" name="regName" [(ngModel)]="regName" placeholder="Повне ім'я" required id="register-name">
+
+            <div class="form-element">
+                <input type="password" name="regPassword" [(ngModel)]="regPassword" placeholder="Пароль" required id="reg-pass">
+                <button class="eye" id="reg-eye" type="button">
+                    <img src="photos/eye.png" alt="">
+                </button>
+            </div>
+
+            <input type="email" name="regEmail" [(ngModel)]="regEmail" required placeholder="Eлектроннa поштa" id="register-mail">
+
+            <div class="a-div">
+                <a class="login-link" id="login-link" href="#" (click)="$event.preventDefault(); modalService.openLogin()">Зайти</a>
+                <a class="login-link" id="forgot-password" href="#">Забув пароль</a>
+            </div>
+
+            <button id="register-btn" class="form-btn" type="submit">Зареєструватись</button>
+        </form>
+
+    </div>
+</div>

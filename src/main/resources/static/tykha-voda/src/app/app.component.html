@@ -1,0 +1,21 @@
+<app-header></app-header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<div *ngIf="!isAdmin" class="advert section non-admin">
+    <h1>Готові до незабутнього відпочинку?</h1>
+    <p>Забронюйте свій візит до "Тихої Води" вже сьогодні і відчуйте справжню гармонію з природою.</p>
+    <button class="book-btn" (click)="openBooking()">Забронювати</button>
+</div>
+
+<app-auth-modal></app-auth-modal>
+
+<app-booking-modal *ngIf="modalService.isBookingModalOpen$ | async"></app-booking-modal>
+
+<app-profile-modal *ngIf="modalService.isProfileModalOpen$ | async"></app-profile-modal>
+
+<app-bookings-modal *ngIf="modalService.isBookingsModalOpen$ | async"></app-bookings-modal>
+
+<app-footer></app-footer>

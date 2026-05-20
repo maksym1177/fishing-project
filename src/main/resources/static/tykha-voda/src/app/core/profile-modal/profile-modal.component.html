@@ -1,0 +1,47 @@
+<div class="modal-overlay" (click)="modalService.closeProfile()">
+  
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    
+    <div class="prifile-div non-admin">
+      <div class="profile-div-img"></div>
+
+      <div class="profile-div-content">
+        <div id="profile-content-img">
+          <img src="assets/photos/profile2.png" alt="Профіль">
+        </div>
+        
+        <div id="profile-content">
+          <form id="profile-form">
+            <div class="profile-info">
+              <div>
+                <h1>Профіль</h1>
+                <p>Тут можна обновити свої персональні дані</p>
+              </div>
+              <button id="profile-save-btn" type="button" (click)="saveProfile()">Зберегти</button>
+            </div>
+
+            <div class="profile-element">
+              <label for="profile-name">Ваше імя</label>
+              <input type="text" id="profile-name" [(ngModel)]="user.name" name="name">
+            </div>
+
+            <div class="profile-element">
+              <label for="profile-email">Ваш email</label>
+              <input type="email" disabled id="profile-email" [value]="user.email" name="email">
+            </div>
+
+            <div class="profile-element">
+              <label for="profile-tel">Ваш номер</label>
+              <input type="tel" id="profile-tel" [(ngModel)]="user.phone" name="phone">
+            </div>
+
+            <div class="profile-element">
+              <p id="discount">Ваша знижка становить: {{ user.discount }}%</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

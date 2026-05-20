@@ -1,0 +1,83 @@
+<div class="modal-overlay" (click)="modalService.close()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    
+    <div class="booking-form-div">
+        <form id="booking-form" [formGroup]="bookingForm" (ngSubmit)="submitBooking()">
+            
+            <div id="booking-section-1" *ngIf="currentStep === 1">
+                <p>1. Оберіть дату</p>
+                <div id="date-selects">
+                    <select id="month-select" class="custom-select" [(ngModel)]="currentMonth" [ngModelOptions]="{standalone: true}" (ngModelChange)="onDateChange()">
+                        <option *ngFor="let month of months; let i = index" [value]="i">{{ month }}</option>
+                    </select>
+                    <select id="year-select" class="custom-select" [(ngModel)]="currentYear" [ngModelOptions]="{standalone: true}" (ngModelChange)="onDateChange()">
+                        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                    </select>
+                </div>
+                
+                <div id="days-container">
+                    <button type="button" *ngFor="let dayObj of days" class="day-btn" 
+                            [class.selected]="isSelected(dayObj.day)" [disabled]="dayObj.disabled" (click)="selectDay(dayObj.day)">
+                        {{ dayObj.day }}
+                    </button>
+                </div>
+                
+                <input type="hidden" id="selected-date" name="date" [value]="selectedDate">
+                <button type="button" id="to-step-2-btn" class="form-btn" style="width: 100%;" (click)="toStep2()">Далі</button>
+            </div>
+
+            <div id="booking-section-2" [style.display]="currentStep === 2 ? 'block' : 'none'">
+            <p>2. Оберіть конкретну альтанку чи місце</p>
+              
+            <select id="category-select" class="custom-select" style="width: 100%; margin-bottom: 20px;" 
+                            [(ngModel)]="selectedCategory" [ngModelOptions]="{standalone: true}" (ngModelChange)="loadLocations()">
+                    <option value="al8">Альтанка на 8 місць</option>
+                    <option value="al12">Альтанка на 12 місць</option>
+                    <option value="fish_spot">Місце для рибалки</option>
+            </select>
+
+           <div id="location-list" class="location-cards-container">
+                <div class="location-card" *ngFor="let loc of locations" (click)="selectLocation(loc.id)">
+                    <img [src]="loc.imageUrl || 'assets/photos/al8.png'" alt="Фото">
+                    <div class="loc-info">
+                        <h3>№{{ loc.locationNumber }}</h3>
+                        <p>Місткість: {{ loc.capacity }}</p>
+                        <p><b>{{ loc.pricePerDay }} грн</b></p>
+                        
+                        <button type="button" 
+                                class="select-loc-btn" 
+                                [class.selected]="selectedLocationId === loc.id">
+                            {{ selectedLocationId === loc.id ? 'ОБРАНО' : 'Обрати' }}
+                        </button>
+                    </div>
+                </div>
+                
+                <p *ngIf="!isLoading && locations.length === 0" style="color:red;">
+                    На жаль, на цю дату все заброньовано.
+                </p>
+            </div>
+
+            <input type="hidden" id="selected-location-id" [value]="selectedLocationId">
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" id="back-to-1" class="form-btn" style="background-color: #6c757d;" (click)="currentStep = 1">Назад</button>
+                <button type="button" id="to-step-3-btn" class="form-btn" *ngIf="selectedLocationId" (click)="toStep3()">Далі</button>
+            </div>
+        </div>
+
+            <div id="booking-section-3" *ngIf="currentStep === 3">
+                <p>3. Контактні дані</p>
+                <input type="text" placeholder="Ваше ім'я" id="booking-name" formControlName="name" required>
+                <input type="email" placeholder="Електронна пошта" id="booking-email" formControlName="email" required style="margin-top: 15px;">
+                <input type="tel" placeholder="Номер телефону" id="booking-tel" formControlName="tel" required style="margin-top: 15px;">
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" id="back-to-2" class="form-btn" style="background-color: #6c757d;" (click)="currentStep = 2">Назад</button>
+                    <button type="submit" id="booking-form-btn" class="form-btn" [disabled]="bookingForm.invalid">Забронювати</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+  </div>
+</div>

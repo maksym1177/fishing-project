@@ -1,0 +1,29 @@
+<div class="page5 non-admin">
+    <div class="section sc1">
+        <img src="assets/photos/fisherman.jpg" alt="">
+        <div class="pg5sec1">
+            <h1>Найбільші трофеї</h1>
+            <p>Перегляньте вражаючі улови наших рибалок. Кожен трофей - це свідчення майстерності, терпіння та любові до риболовлі.</p>
+        </div>
+    </div>
+
+    <div class="section pg5sec2">
+        <h1>Нещодавні трофеї</h1>
+        
+        <div class="grid-photos">
+            <img src="assets/photos/fish1.webp" alt="Трофей 1">
+            <img src="assets/photos/fish2.jpg" alt="Трофей 2">
+            <img src="assets/photos/fish3.webp" alt="Трофей 3">
+            <img src="assets/photos/fish4.webp" alt="Трофей 4">
+            <img src="assets/photos/fish5.jpg" alt="Трофей 5">
+            <img src="assets/photos/fish5_dup.jpg" alt="Трофей 6">
+            <img src="assets/photos/fish7.jpg" alt="Трофей 7">
+            <img src="assets/photos/fish8.jpg" alt="Трофей 8">
+            <img *ngFor="let photo of visiblePhotos" [src]="photo" alt="Трофей">
+        </div>
+
+        <button class="trophies-btn" id="more-tr-btn" (click)="loadMore()">
+            Більше трофеїв
+        </button>
+    </div>
+</div>
