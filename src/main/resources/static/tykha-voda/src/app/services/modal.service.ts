@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { BookingModalComponent } from '../core/booking-modal/booking-modal.component';
 @Injectable({
   providedIn: 'root'
 })

@@ -13,7 +13,7 @@
         
         <div *ngIf="activeTab === 'active'">
           <div *ngIf="activeBookings.length === 0" style="padding: 20px; text-align: center;">
-            У вас немає активних бронювань.
+             <p>У вас немає активних бронювань.</p>
           </div>
           <div class="booking-div" *ngFor="let b of activeBookings">
             <div>

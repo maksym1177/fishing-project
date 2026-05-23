@@ -31,7 +31,7 @@ export class ProfileModalComponent implements OnInit {
           name: data.name,
           email: data.email,
           phone: data.phone,
-          discount: data.discount || 15 
+          discount: data.discount || 0
         };
       },
       error: (err) => console.error('Помилка завантаження профілю', err)

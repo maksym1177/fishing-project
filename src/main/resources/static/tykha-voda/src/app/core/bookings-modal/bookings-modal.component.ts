@@ -10,7 +10,6 @@ import { ModalService } from '../../services/modal.service';
 export class BookingsModalComponent implements OnInit {
   activeTab: 'active' | 'past' = 'active';
   
-  // Змінні для відфільтрованих списків
   activeBookings: any[] = [];
   pastBookings: any[] = [];
 
